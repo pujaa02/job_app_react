@@ -26,14 +26,14 @@ app.use(body_parser_1.default.json());
 // app.set("view engine", "ejs");
 // app.use(express.static("public"));
 const corsOptions = {
-    origin: 'http://localhost:5000',
-    methods: 'GET, PUT, POST',
-    credentials: true
+    origin: "http://localhost:3000",
+    methods: "GET, PUT, POST",
+    credentials: true,
 };
 app.use((0, cors_1.default)(corsOptions));
-app.options('http://localhost:5000', (0, cors_1.default)(corsOptions));
+app.options("http://localhost:3000", (0, cors_1.default)(corsOptions));
 app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://localhost:5000");
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
     res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();

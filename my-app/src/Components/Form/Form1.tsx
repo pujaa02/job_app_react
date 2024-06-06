@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
-import "./form.css"
+import "./form.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ApplicationFormData, validateformdata } from "../interfacefile";
@@ -22,23 +22,8 @@ const Form1: React.FC = () => {
     zipcode: "",
     bd: "",
   });
-  const [validaterr, setValidateerr] = useState<validateformdata>({
-    fn: "",
-    ln: "",
-    desig: "",
-    mail: "",
-    mobile: "",
-    gen: "",
-    rel: "",
-    add1: "",
-    add2: "",
-    city: "",
-    state: "",
-    zip: "",
-    dob: "",
-  })
-  const token = document.cookie
-  if (token) {
+  const token = document.cookie;
+  if (!token) {
     const handleChange = (
       e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
     ) => {
@@ -48,85 +33,40 @@ const Form1: React.FC = () => {
         [name]: value,
       }));
     };
-    const validateform = (data: ApplicationFormData) => {
-      const validaterr: validateformdata = {} as validateformdata;
-      if (!data.fname.trim()) {
-        validaterr.fn = "FirstName is Required!!"
-      }
-      if (!data.lname.trim()) {
-        validaterr.ln = "LastName is Required!!"
-      }
-      if (!data.designation.trim()) {
-        validaterr.desig = "Designation is required!"
-      }
-      if (!data.email.trim()) {
-        validaterr.mail = 'Email is required';
-      } else if (!/\S+@\S+\.\S+/.test(data.email)) {
-        validaterr.mail = 'Email is invalid';
-      }
-      if (!data.phone.trim()) {
-        validaterr.mobile = "Number is Required!!"
-      } else if (!/^\d{10}$/.test(data.phone)) {
-        validaterr.mobile = "Please enter valid number!!"
-      }
-      if (!data.rel_status.trim()) {
-        validaterr.rel = "Relation is required!"
-      }
-      if (!data.address1.trim()) {
-        validaterr.add1 = "Address1 is required!"
-      }
-      if (!data.city.trim()) {
-        validaterr.city = "City is required!"
-      }
-      if (!data.state.trim()) {
-        validaterr.state = "state is required!"
-      }
-      if (!data.zipcode.trim()) {
-        validaterr.zip = "Zipcode is required!"
-      }
-      if (!data.gender.trim()) {
-        validaterr.gen = "Gender is Required!!"
-      }
-      if (!data.bd.trim()) {
-        validaterr.dob = 'Birthday Date is Required!!'
-      }
-      return validaterr;
-    }
+
     const handleSubmit = (e: FormEvent) => {
       e.preventDefault();
-      const newerrors = validateform(formData);
-      setValidateerr(newerrors);
-      if ((Object.values(newerrors)).length === 0) {
-        axios({
-          url: "http://localhost:3036/submit",
-          method: "POST",
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          data: JSON.stringify({
-            formData
-          }),
-        })
-          .then(async (res) => {
-            const result = await res.data;
-            if (result.msg === "success") {
-              navigate('/fetchemp');
-            }
 
-          })
-          .catch((err) => console.log(err));
-      }
+      axios({
+        url: "http://localhost:3036/submit",
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        data: JSON.stringify({
+          formData,
+        }),
+      })
+        .then(async (res) => {
+          const result = await res.data;
+          if (result.msg === "success") {
+            navigate("/fetchemp");
+          }
+        })
+        .catch((err) => console.log(err));
     };
     const logout = () => {
       const token = Cookies.remove("token");
       if (!document.cookie) {
-        navigate("/login")
+        navigate("/login");
       }
-    }
+    };
     return (
       <div className="application-form-container">
-        <p className="logout" onClick={logout}>Log Out</p>
+        <p className="logout" onClick={logout}>
+          Log Out
+        </p>
         <form onSubmit={handleSubmit} className="application-form">
           <fieldset className="fieldset form-control">
             <legend>Basic Detail</legend>
@@ -141,7 +81,6 @@ const Form1: React.FC = () => {
                   onChange={handleChange}
                   className="form-control"
                 />
-                {validaterr.fn && <span className="error-message">{validaterr.fn}</span>}
               </div>
               <div className="col form-group">
                 <label htmlFor="lname">Last Name:</label>
@@ -153,7 +92,6 @@ const Form1: React.FC = () => {
                   onChange={handleChange}
                   className="form-control"
                 />
-                {validaterr.ln && <span className="error-message">{validaterr.ln}</span>}
               </div>
             </div>
             <div className="row">
@@ -167,7 +105,6 @@ const Form1: React.FC = () => {
                   onChange={handleChange}
                   className="form-control"
                 />
-                {validaterr.desig && <span className="error-message">{validaterr.desig}</span>}
               </div>
               <div className="col form-group">
                 <label htmlFor="email">Email:</label>
@@ -179,7 +116,6 @@ const Form1: React.FC = () => {
                   onChange={handleChange}
                   className="form-control"
                 />
-                {validaterr.mail && <span className="error-message">{validaterr.mail}</span>}
               </div>
             </div>
             <div className="row">
@@ -193,7 +129,6 @@ const Form1: React.FC = () => {
                   onChange={handleChange}
                   className="form-control"
                 />
-                {validaterr.mobile && <span className="error-message">{validaterr.mobile}</span>}
               </div>
               <div className="col form-group">
                 <label htmlFor="bd">DOB:</label>
@@ -205,7 +140,6 @@ const Form1: React.FC = () => {
                   onChange={handleChange}
                   className="form-control"
                 />
-                {validaterr.dob && <span className="error-message">{validaterr.dob}</span>}
               </div>
             </div>
             <div className="row">
@@ -219,7 +153,6 @@ const Form1: React.FC = () => {
                   onChange={handleChange}
                   className="form-control"
                 />
-                {validaterr.add1 && <span className="error-message">{validaterr.add1}</span>}
               </div>
               <div className="col form-group">
                 <label htmlFor="address2">Address2:</label>
@@ -233,7 +166,6 @@ const Form1: React.FC = () => {
                 />
               </div>
             </div>
-
             <div className="row">
               <div className="col form-group">
                 <label htmlFor="city">City:</label>
@@ -245,7 +177,6 @@ const Form1: React.FC = () => {
                   onChange={handleChange}
                   className="form-control"
                 />
-                {validaterr.city && <span className="error-message">{validaterr.city}</span>}
               </div>
               <div className="col form-group">
                 <label htmlFor="state">State:</label>
@@ -257,7 +188,6 @@ const Form1: React.FC = () => {
                   onChange={handleChange}
                   className="form-control"
                 />
-                {validaterr.state && <span className="error-message">{validaterr.state}</span>}
               </div>
               <div className="col form-group">
                 <label htmlFor="zipcode">zipcode : </label>
@@ -269,13 +199,12 @@ const Form1: React.FC = () => {
                   onChange={handleChange}
                   className="form-control"
                 />
-                {validaterr.zip && <span className="error-message">{validaterr.zip}</span>}
               </div>
             </div>
             <div className="row">
               <div className="col">
                 <div className="form-gender">
-                  <label >Gender:</label>
+                  <label>Gender:</label>
                   <input
                     type="radio"
                     id="male"
@@ -307,32 +236,35 @@ const Form1: React.FC = () => {
                   />
                   <label htmlFor="other">Other</label>
                 </div>
-                {validaterr.gen && <span className="error-message">{validaterr.gen}</span>}
               </div>
               <div className="col">
                 <div className=" form-group">
                   <label htmlFor="rel_status">Relationship Status:</label>
-                  <select name="rel_status" id="rel_status" value={formData.rel_status} onChange={handleChange}>
+                  <select
+                    name="rel_status"
+                    id="rel_status"
+                    value={formData.rel_status}
+                    onChange={handleChange}
+                  >
                     <option value="married">Married</option>
                     <option value="unmarried">Unmarried</option>
                     <option value="widow">Widow</option>
                     <option value="divorced">Divorced</option>
                   </select>
                 </div>
-                {validaterr.rel && <span className="error-message">{validaterr.rel}</span>}
               </div>
             </div>
-          </fieldset> <br />
+          </fieldset>{" "}
+          <br />
         </form>
       </div>
     );
-  }
-  else {
+  } else {
     return (
       <div className="denied">
-        <h1 >Access Denied!!</h1>
+        <h1>Access Denied!!</h1>
       </div>
-    )
+    );
   }
 };
 

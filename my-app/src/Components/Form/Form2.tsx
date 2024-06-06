@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
-import "./form.css"
+import "./form.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ApplicationFormData, validateformdata } from "../interfacefile";
@@ -22,23 +22,9 @@ const Form2: React.FC = () => {
     zipcode: "",
     bd: "",
   });
-  const [validaterr, setValidateerr] = useState<validateformdata>({
-    fn: "",
-    ln: "",
-    desig: "",
-    mail: "",
-    mobile: "",
-    gen: "",
-    rel: "",
-    add1: "",
-    add2: "",
-    city: "",
-    state: "",
-    zip: "",
-    dob: "",
-  })
-  const token = document.cookie
-  if (token) {
+
+  const token = document.cookie;
+  if (!token) {
     const handleChange = (
       e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
     ) => {
@@ -48,283 +34,193 @@ const Form2: React.FC = () => {
         [name]: value,
       }));
     };
-    const validateform = (data: ApplicationFormData) => {
-      const validaterr: validateformdata = {} as validateformdata;
-      if (!data.fname.trim()) {
-        validaterr.fn = "FirstName is Required!!"
-      }
-      if (!data.lname.trim()) {
-        validaterr.ln = "LastName is Required!!"
-      }
-      if (!data.designation.trim()) {
-        validaterr.desig = "Designation is required!"
-      }
-      if (!data.email.trim()) {
-        validaterr.mail = 'Email is required';
-      } else if (!/\S+@\S+\.\S+/.test(data.email)) {
-        validaterr.mail = 'Email is invalid';
-      }
-      if (!data.phone.trim()) {
-        validaterr.mobile = "Number is Required!!"
-      } else if (!/^\d{10}$/.test(data.phone)) {
-        validaterr.mobile = "Please enter valid number!!"
-      }
-      if (!data.rel_status.trim()) {
-        validaterr.rel = "Relation is required!"
-      }
-      if (!data.address1.trim()) {
-        validaterr.add1 = "Address1 is required!"
-      }
-      if (!data.city.trim()) {
-        validaterr.city = "City is required!"
-      }
-      if (!data.state.trim()) {
-        validaterr.state = "state is required!"
-      }
-      if (!data.zipcode.trim()) {
-        validaterr.zip = "Zipcode is required!"
-      }
-      if (!data.gender.trim()) {
-        validaterr.gen = "Gender is Required!!"
-      }
-      if (!data.bd.trim()) {
-        validaterr.dob = 'Birthday Date is Required!!'
-      }
-      return validaterr;
-    }
+
     const handleSubmit = (e: FormEvent) => {
       e.preventDefault();
-      const newerrors = validateform(formData);
-      setValidateerr(newerrors);
-      if ((Object.values(newerrors)).length === 0) {
-        axios({
-          url: "http://localhost:3036/submit",
-          method: "POST",
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          data: JSON.stringify({
-            formData
-          }),
-        })
-          .then(async (res) => {
-            const result = await res.data;
-            if (result.msg === "success") {
-              navigate('/fetchemp');
-            }
 
-          })
-          .catch((err) => console.log(err));
-      }
+      axios({
+        url: "http://localhost:3036/submit",
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        data: JSON.stringify({
+          formData,
+        }),
+      })
+        .then(async (res) => {
+          const result = await res.data;
+          if (result.msg === "success") {
+            navigate("/fetchemp");
+          }
+        })
+        .catch((err) => console.log(err));
     };
     const logout = () => {
       const token = Cookies.remove("token");
       if (!document.cookie) {
-        navigate("/login")
+        navigate("/login");
       }
-    }
+    };
     return (
       <div className="application-form-container">
-        <p className="logout" onClick={logout}>Log Out</p>
+        <p className="logout" onClick={logout}>
+          Log Out
+        </p>
         <form onSubmit={handleSubmit} className="application-form">
           <fieldset className="fieldset form-control">
-            <legend>Education Detail</legend>
-            <div className="row">
-              <p><u>SSC Result</u></p>
-              <div className="col form-group">
-                <label htmlFor="fname">Board Name :</label>
-                <input
-                  type="text"
-                  id="fname"
-                  name="fname"
-                  value={formData.fname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.fn && <span className="error-message">{validaterr.fn}</span>} */}
+            <legend>
+              <b>Education_details</b>
+            </legend>
+            <div className="container">
+              <h5>SSC result</h5>
+              <div className="row">
+                <div className="col">
+                  <label htmlFor="board_name">Name of Board</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="board1"
+                    name="board_name"
+                  />
+                  <p id="p14" className="ssc"></p>
+                </div>
+                <div className="col">
+                  <label htmlFor="passing_year">Passing year</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="py1"
+                    name="py"
+                  />
+                  <p id="p15" className="ssc"></p>
+                </div>
+                <div className="col">
+                  <label htmlFor="pecentage">Percentage</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="pecentage1"
+                    name="percentage"
+                  />
+                  <p id="p16" className="ssc"></p>
+                </div>
               </div>
-              <div className="col form-group">
-                <label htmlFor="lname">Passing Year :</label>
-                <input
-                  type="text"
-                  id="lname"
-                  name="lname"
-                  value={formData.lname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.ln && <span className="error-message">{validaterr.ln}</span>} */}
+              <hr />
+              <h5>HSC result</h5>
+              <div className="row">
+                <div className="col">
+                  <label htmlFor="board_name">Name of Board</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="board2"
+                    name="board_name"
+                  />
+                  <p id="p17" className="hsc"></p>
+                </div>
+                <div className="col">
+                  <label htmlFor="passing_year">Passing year</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="py2"
+                    name="py"
+                  />
+                  <p id="p18" className="hsc"></p>
+                </div>
+                <div className="col">
+                  <label htmlFor="pecentage">Percentage</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="pecentage2"
+                    name="percentage"
+                  />
+                  <p id="p19" className="hsc"></p>
+                </div>
               </div>
-              <div className="col form-group">
-                <label htmlFor="lname">Percentage :</label>
-                <input
-                  type="text"
-                  id="lname"
-                  name="lname"
-                  value={formData.lname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.ln && <span className="error-message">{validaterr.ln}</span>} */}
+              <hr />
+              <h5>Bachelor degree</h5>
+              <div className="row">
+                <div className="col">
+                  <label htmlFor="course_name">Cource Name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="course1"
+                    name="board_name"
+                  />
+                  <p id="p20" className="bachelor"></p>
+                </div>
+                <div className="col">
+                  <label htmlFor="passing_year">Passing year</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="py"
+                    id="py11"
+                  />
+                  <p id="p22" className="bachelor"></p>
+                </div>
+                <div className="col">
+                  <label htmlFor="pecentage">Percentage</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="pecentage11"
+                    name="percentage"
+                  />
+                  <p id="p23" className="bachelor"></p>
+                </div>
               </div>
-            </div>
-            <hr />
-            {/* second row */}
-            <div className="row">
-              <p><u>HSC Result</u> </p>
-              <div className="col form-group">
-                <label htmlFor="fname">Board Name :</label>
-                <input
-                  type="text"
-                  id="fname"
-                  name="fname"
-                  value={formData.fname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.fn && <span className="error-message">{validaterr.fn}</span>} */}
-              </div>
-              <div className="col form-group">
-                <label htmlFor="lname">Passing Year :</label>
-                <input
-                  type="text"
-                  id="lname"
-                  name="lname"
-                  value={formData.lname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.ln && <span className="error-message">{validaterr.ln}</span>} */}
-              </div>
-              <div className="col form-group">
-                <label htmlFor="lname">Percentage :</label>
-                <input
-                  type="text"
-                  id="lname"
-                  name="lname"
-                  value={formData.lname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.ln && <span className="error-message">{validaterr.ln}</span>} */}
-              </div>
-            </div>
-            <hr />
-            <div className="row">
-              <p><u> Bachelor Degree</u></p>
-              <div className="col form-group">
-                <label htmlFor="fname">Cource Name :</label>
-                <input
-                  type="text"
-                  id="fname"
-                  name="fname"
-                  value={formData.fname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.fn && <span className="error-message">{validaterr.fn}</span>} */}
-              </div>
-              <div className="col form-group">
-                <label htmlFor="fname">Univercity :</label>
-                <input
-                  type="text"
-                  id="fname"
-                  name="fname"
-                  value={formData.fname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.fn && <span className="error-message">{validaterr.fn}</span>} */}
-              </div>
-              <div className="col form-group">
-                <label htmlFor="lname">Passing Year :</label>
-                <input
-                  type="text"
-                  id="lname"
-                  name="lname"
-                  value={formData.lname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.ln && <span className="error-message">{validaterr.ln}</span>} */}
-              </div>
-              <div className="col form-group">
-                <label htmlFor="lname">Percentage :</label>
-                <input
-                  type="text"
-                  id="lname"
-                  name="lname"
-                  value={formData.lname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.ln && <span className="error-message">{validaterr.ln}</span>} */}
-              </div>
-            </div>
-            <hr />
-            <div className="row">
-              <p><u> Master Degree</u></p>
-              <div className="col form-group">
-                <label htmlFor="fname">Cource Name :</label>
-                <input
-                  type="text"
-                  id="fname"
-                  name="fname"
-                  value={formData.fname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.fn && <span className="error-message">{validaterr.fn}</span>} */}
-              </div>
-              <div className="col form-group">
-                <label htmlFor="fname">Univercity :</label>
-                <input
-                  type="text"
-                  id="fname"
-                  name="fname"
-                  value={formData.fname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.fn && <span className="error-message">{validaterr.fn}</span>} */}
-              </div>
-              <div className="col form-group">
-                <label htmlFor="lname">Passing Year :</label>
-                <input
-                  type="text"
-                  id="lname"
-                  name="lname"
-                  value={formData.lname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.ln && <span className="error-message">{validaterr.ln}</span>} */}
-              </div>
-              <div className="col form-group">
-                <label htmlFor="lname">Percentage :</label>
-                <input
-                  type="text"
-                  id="lname"
-                  name="lname"
-                  value={formData.lname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.ln && <span className="error-message">{validaterr.ln}</span>} */}
+              <hr />
+              <h5>Master degree</h5>
+              <div className="row">
+                <div className="col">
+                  <label htmlFor="course_name">Cource Name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="course2"
+                    name="board_name"
+                  />
+                  <p id="p24" className="master"></p>
+                </div>
+                <div className="col">
+                  <label htmlFor="passing_year">Passing year</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="py22"
+                    name="py"
+                  />
+                  <p id="p26" className="master"></p>
+                </div>
+                <div className="col">
+                  <label htmlFor="pecentage">Percentage</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="pecentage22"
+                    name="percentage"
+                  />
+                  <p id="p27" className="master"></p>
+                </div>
               </div>
             </div>
-          </fieldset> <br />
+          </fieldset>
+          <br />
         </form>
       </div>
     );
-  }
-  else {
+  } else {
     return (
       <div className="denied">
-        <h1 >Access Denied!!</h1>
+        <h1>Access Denied!!</h1>
       </div>
-    )
+    );
   }
 };
 

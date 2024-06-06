@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
-import "./form.css"
+import "./form.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ApplicationFormData, validateformdata } from "../interfacefile";
@@ -22,23 +22,9 @@ const Form3: React.FC = () => {
     zipcode: "",
     bd: "",
   });
-  const [validaterr, setValidateerr] = useState<validateformdata>({
-    fn: "",
-    ln: "",
-    desig: "",
-    mail: "",
-    mobile: "",
-    gen: "",
-    rel: "",
-    add1: "",
-    add2: "",
-    city: "",
-    state: "",
-    zip: "",
-    dob: "",
-  })
-  const token = document.cookie
-  if (token) {
+
+  const token = document.cookie;
+  if (!token) {
     const handleChange = (
       e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
     ) => {
@@ -48,250 +34,184 @@ const Form3: React.FC = () => {
         [name]: value,
       }));
     };
-    const validateform = (data: ApplicationFormData) => {
-      const validaterr: validateformdata = {} as validateformdata;
-      if (!data.fname.trim()) {
-        validaterr.fn = "FirstName is Required!!"
-      }
-      if (!data.lname.trim()) {
-        validaterr.ln = "LastName is Required!!"
-      }
-      if (!data.designation.trim()) {
-        validaterr.desig = "Designation is required!"
-      }
-      if (!data.email.trim()) {
-        validaterr.mail = 'Email is required';
-      } else if (!/\S+@\S+\.\S+/.test(data.email)) {
-        validaterr.mail = 'Email is invalid';
-      }
-      if (!data.phone.trim()) {
-        validaterr.mobile = "Number is Required!!"
-      } else if (!/^\d{10}$/.test(data.phone)) {
-        validaterr.mobile = "Please enter valid number!!"
-      }
-      if (!data.rel_status.trim()) {
-        validaterr.rel = "Relation is required!"
-      }
-      if (!data.address1.trim()) {
-        validaterr.add1 = "Address1 is required!"
-      }
-      if (!data.city.trim()) {
-        validaterr.city = "City is required!"
-      }
-      if (!data.state.trim()) {
-        validaterr.state = "state is required!"
-      }
-      if (!data.zipcode.trim()) {
-        validaterr.zip = "Zipcode is required!"
-      }
-      if (!data.gender.trim()) {
-        validaterr.gen = "Gender is Required!!"
-      }
-      if (!data.bd.trim()) {
-        validaterr.dob = 'Birthday Date is Required!!'
-      }
-      return validaterr;
-    }
+
     const handleSubmit = (e: FormEvent) => {
       e.preventDefault();
-      const newerrors = validateform(formData);
-      setValidateerr(newerrors);
-      if ((Object.values(newerrors)).length === 0) {
-        axios({
-          url: "http://localhost:3036/submit",
-          method: "POST",
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          data: JSON.stringify({
-            formData
-          }),
-        })
-          .then(async (res) => {
-            const result = await res.data;
-            if (result.msg === "success") {
-              navigate('/fetchemp');
-            }
 
-          })
-          .catch((err) => console.log(err));
-      }
+      axios({
+        url: "http://localhost:3036/submit",
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        data: JSON.stringify({
+          formData,
+        }),
+      })
+        .then(async (res) => {
+          const result = await res.data;
+          if (result.msg === "success") {
+            navigate("/fetchemp");
+          }
+        })
+        .catch((err) => console.log(err));
     };
     const logout = () => {
       const token = Cookies.remove("token");
       if (!document.cookie) {
-        navigate("/login")
+        navigate("/login");
       }
-    }
+    };
     return (
       <div className="application-form-container">
-        <p className="logout" onClick={logout}>Log Out</p>
+        <p className="logout" onClick={logout}>
+          Log Out
+        </p>
         <form onSubmit={handleSubmit} className="application-form">
-
-          <fieldset className="fieldset form-control">
-            <legend>Work Experience</legend>
-            <div className="row">
-              <div className="col form-group">
-                <label htmlFor="fname">Company Name :</label>
-                <input
-                  type="text"
-                  id="fname"
-                  name="fname"
-                  value={formData.fname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.fn && <span className="error-message">{validaterr.fn}</span>} */}
+          <fieldset className="fieldset form-control" >
+            <legend>
+              <b>Work Experience</b>
+            </legend>
+            <div className="container">
+              <div className="row">
+                <div className="col">
+                  <label htmlFor="company_name">Company name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="companyname1"
+                    name="companyname"
+                  />
+                  <p id="p28" className="workerr1"></p>
+                </div>
+                <div className="col">
+                  <label htmlFor="designation">Designation</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="designation1"
+                    name="designation"
+                  />
+                  <p id="p29" className="workerr1"></p>
+                </div>
+                <div className="col">
+                  <label htmlFor="date">From</label>
+                  <input
+                    type="text"
+                    className="duration form-control"
+                    id="date11"
+                    name="from"
+                  />
+                  <p id="p30" className="workerr1"></p>
+                </div>
+                <div className="col">
+                  <label htmlFor="date">To</label>
+                  <input
+                    type="text"
+                    id="date12"
+                    name="to"
+                    className="duration form-control"
+                  />
+                  <p id="p31" className="workerr1"></p>
+                </div>
               </div>
-              <div className="col form-group">
-                <label htmlFor="lname">Designation :</label>
-                <input
-                  type="text"
-                  id="lname"
-                  name="lname"
-                  value={formData.lname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.ln && <span className="error-message">{validaterr.ln}</span>} */}
+              <div className="row">
+                <div className="col">
+                  <label htmlFor="company_name">Company name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="companyname2"
+                    name="companyname"
+                  />
+                  <p id="p32" className="workerr2"></p>
+                </div>
+                <div className="col">
+                  <label htmlFor="designation">Designation</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="designation2"
+                    name="designation"
+                  />
+                  <p id="p33" className="workerr2"></p>
+                </div>
+                <div className="col">
+                  <label htmlFor="date">From</label>
+                  <input
+                    type="text"
+                    id="date21"
+                    name="from"
+                    className="duration form-control"
+                  />
+                  <p id="p34" className="workerr2"></p>
+                </div>
+                <div className="col">
+                  <label htmlFor="date">To</label>
+                  <input
+                    type="text"
+                    id="date22"
+                    name="to"
+                    className="duration form-control"
+                  />
+                  <p id="p35" className="workerr2"></p>
+                </div>
               </div>
-              <div className="col form-group">
-                <label htmlFor="lname">From :</label>
-                <input
-                  type="date"
-                  id="lname"
-                  name="lname"
-                  value={formData.lname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.ln && <span className="error-message">{validaterr.ln}</span>} */}
-              </div>
-              <div className="col form-group">
-                <label htmlFor="lname">to :</label>
-                <input
-                  type="date"
-                  id="lname"
-                  name="lname"
-                  value={formData.lname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.ln && <span className="error-message">{validaterr.ln}</span>} */}
-              </div>
-            </div>
-            <div className="row">
-              <div className="col form-group">
-                <label htmlFor="fname">Company Name :</label>
-                <input
-                  type="text"
-                  id="fname"
-                  name="fname"
-                  value={formData.fname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.fn && <span className="error-message">{validaterr.fn}</span>} */}
-              </div>
-              <div className="col form-group">
-                <label htmlFor="lname">Designation :</label>
-                <input
-                  type="text"
-                  id="lname"
-                  name="lname"
-                  value={formData.lname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.ln && <span className="error-message">{validaterr.ln}</span>} */}
-              </div>
-              <div className="col form-group">
-                <label htmlFor="lname">From :</label>
-                <input
-                  type="date"
-                  id="lname"
-                  name="lname"
-                  value={formData.lname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.ln && <span className="error-message">{validaterr.ln}</span>} */}
-              </div>
-              <div className="col form-group">
-                <label htmlFor="lname">to :</label>
-                <input
-                  type="date"
-                  id="lname"
-                  name="lname"
-                  value={formData.lname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.ln && <span className="error-message">{validaterr.ln}</span>} */}
-              </div>
-            </div>
-            <div className="row">
-              <div className="col form-group">
-                <label htmlFor="fname">Company Name :</label>
-                <input
-                  type="text"
-                  id="fname"
-                  name="fname"
-                  value={formData.fname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.fn && <span className="error-message">{validaterr.fn}</span>} */}
-              </div>
-              <div className="col form-group">
-                <label htmlFor="lname">Designation :</label>
-                <input
-                  type="text"
-                  id="lname"
-                  name="lname"
-                  value={formData.lname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.ln && <span className="error-message">{validaterr.ln}</span>} */}
-              </div>
-              <div className="col form-group">
-                <label htmlFor="lname">From :</label>
-                <input
-                  type="date"
-                  id="lname"
-                  name="lname"
-                  value={formData.lname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.ln && <span className="error-message">{validaterr.ln}</span>} */}
-              </div>
-              <div className="col form-group">
-                <label htmlFor="lname">to :</label>
-                <input
-                  type="date"
-                  id="lname"
-                  name="lname"
-                  value={formData.lname}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                {/* {validaterr.ln && <span className="error-message">{validaterr.ln}</span>} */}
+              <div className="row">
+                <div className="col">
+                  <label htmlFor="company_name">Company name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="companyname3"
+                    name="companyname"
+                  />
+                  <p id="p36" className="workerr3"></p>
+                </div>
+                <div className="col">
+                  <label htmlFor="designation">Designation</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="designation3"
+                    name="designation"
+                  />
+                  <p id="p37" className="workerr3"></p>
+                </div>
+                <div className="col">
+                  <label htmlFor="date">From</label>
+                  <input
+                    type="text"
+                    id="date31"
+                    name="from"
+                    className="duration form-control"
+                  />
+                  <p id="p38" className="workerr3"></p>
+                </div>
+                <div className="col">
+                  <label htmlFor="date">To</label>
+                  <input
+                    type="text"
+                    id="date32"
+                    name="to"
+                    className="duration form-control"
+                  />
+                  <p id="p39" className="workerr3"></p>
+                </div>
               </div>
             </div>
-          </fieldset> <br />
+          </fieldset>
+          <br />
         </form>
       </div>
     );
-  }
-  else {
+  } else {
     return (
       <div className="denied">
-        <h1 >Access Denied!!</h1>
+        <h1>Access Denied!!</h1>
       </div>
-    )
+    );
   }
 };
 
