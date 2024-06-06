@@ -1,0 +1,1 @@
+{"version":3,"file":"get_cities.js","sourceRoot":"","sources":["../../../controller/ajaxcityfetch/get_cities.ts"],"names":[],"mappings":";;;;;AACA,qEAAuC;AAIvC,KAAK,UAAU,UAAU,CAAC,GAAY,EAAE,GAAa;IACnD,MAAM,KAAK,GAAW,MAAM,kBAAG,CAAC,MAAM,CAAC,sBAAsB,CAAC,CAAC;IAC/D,GAAG,CAAC,IAAI,CAAC,KAAK,CAAC,CAAC;AAClB,CAAC;AAED,kBAAe,UAAU,CAAC"}
