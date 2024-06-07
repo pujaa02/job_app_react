@@ -9,8 +9,8 @@ import cors from "cors";
 import path = require("path");
 
 app.use(cookieParser());
-import bodyParser from "body-parser";
-app.use(bodyParser.urlencoded({ extended: false }));
+import bodyParser from 'body-parser';
+app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
 // app.use(
 //   "/css",
@@ -23,20 +23,17 @@ app.use(bodyParser.json());
 // app.set("view engine", "ejs");
 // app.use(express.static("public"));
 const corsOptions = {
-  origin: "http://localhost:3000",
-  methods: "GET, PUT, POST",
-  credentials: true,
+  origin: 'http://localhost:5000',
+  methods: 'GET, PUT, POST',
+  credentials: true
 };
-app.use(cors(corsOptions));
-app.options("http://localhost:3000", cors(corsOptions));
+app.use(cors(corsOptions))
+app.options('http://localhost:5000', cors(corsOptions));
 
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", "http://localhost:5000");
   res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 app.get("/", (req, res) => {

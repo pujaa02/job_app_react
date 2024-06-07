@@ -30,6 +30,7 @@ const express = __importStar(require("express"));
 const route = express.Router();
 // import form from "../controller/form";
 const userauthenticate_1 = __importDefault(require("../controller/userauthenticate"));
+const ajaxform_1 = __importDefault(require("../controller/ajaxform"));
 const fetchuser_1 = __importDefault(require("../controller/fetchuser"));
 // import updateform from "../controller/updateform";
 route.post("/register", userauthenticate_1.default.register);
@@ -38,6 +39,8 @@ route.get("/deleteuser/:id", userauthenticate_1.default.deleteuser);
 route.post("/password/:user_id", userauthenticate_1.default.password);
 route.get("/checkuser/:email/:pass", userauthenticate_1.default.checkuser);
 route.get("/finduser/:email", userauthenticate_1.default.finduser);
+//insert form
+route.post("/insertform", ajaxform_1.default.insertform);
 // route.post("/submit", form.submit);
 route.get("/getallemp", fetchuser_1.default.getallemp);
 // route.get("/findemp/:id", updateform.findemp);

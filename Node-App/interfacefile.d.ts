@@ -1,13 +1,4 @@
-export interface City {
-    id: number | string;
-    city: string;
-    state_id: number | string;
-}
-export interface State {
-    id: number | string;
-    name: string;
-    country_id: number | string;
-}
+
 export interface Edu {
     edu_id: number | string;
     emp_id: number | string;
@@ -67,30 +58,43 @@ export interface FormData {
     fname: string;
     lname: string;
     designa: string;
-    dob: string;
+    bd: string;
     email: string;
-    number: string;
+    phone: string;
     zipcode: string;
-    add1: string;
-    add2: string;
+    address1: string;
+    address2: string;
     city: string;
     state: string;
     gender: string;
-    relstatus: string;
-    lan1: string;
-    able1?: boolean;
-    lan2: string;
-    able2?: boolean;
-    lan3: string;
-    able3?: boolean;
-    tech1: string;
-    level1: string;
-    tech2: string;
-    level2: string;
-    tech3: string;
-    level3: string;
-    tech4: string;
-    level4: string;
+    rel_status: string;
+
+    board_name1: string;
+    board_name2: string;
+    board_name3: string;
+    board_name4: string;
+    py1: string;
+    py2: string;
+    py3: string;
+    py4: string;
+    percentage1: string;
+    percentage2: string;
+    percentage3: string;
+    percentage4: string;
+
+    companyname1: string;
+    designation1: string
+    date11: Date;
+    date12: Date;
+    companyname2: string;
+    designation2: string
+    date21: Date;
+    date22: Date;
+    companyname3: string;
+    designation3: string
+    date31: Date;
+    date32: Date;
+
     name1: string;
     mobileno1: string;
     rel1: string;
@@ -100,23 +104,12 @@ export interface FormData {
     name3: string;
     mobileno3: string;
     rel3: string;
+
     preloc: string;
     notice: string;
     exctc: string;
     curctc: string;
     depa: string;
-    board_name: string[];
-    py: string[];
-    percentage: string[];
-    companyname: string[];
-    designation: string[];
-    from: string[];
-    to: string[];
-    name: string[];
-    mobileno: string[];
-    rel: string[];
-    address1: string;
-    address2: string;
 }
 export interface Ids {
     id: number | string;
@@ -170,134 +163,4 @@ export interface RegisterData {
     phone: string;
     gender: string;
     bd: string;
-}
-export interface arrival {
-    book_img: string;
-    prime_book_id: number;
-    created_at: Date | string
-}
-export interface recommendeddata {
-    prime_book_id: number;
-    rating: number;
-    book_title: string;
-    author_name: string;
-    book_img: string;
-    book_publication_year: number;
-    genre_id: number;
-    genre_name: string;
-}
-
-export interface recent {
-    prime_book_id: number
-    book_id: number;
-    borrow_date: Date | string;
-    author_name: string;
-    book_img: string;
-    book_publication_year: number;
-    book_title: string;
-    genre_id: number;
-    genre_name: string;
-    rating: number;
-}
-export interface genre {
-    genre_id: number;
-    genre_name: string
-    Fiction: string
-}
-export interface allbook {
-    prime_book_id: number;
-    author_name: string
-    book_img: string;
-    book_publication_year: number;
-    book_title: string;
-    genre_id: number
-    genre_name: string;
-    rating: number;
-}
-export interface rate {
-    prime_book_id: number;
-    rating: number;
-}
-export interface recommend {
-    prime_book_id: number;
-    author_name?: string | undefined;
-    book_img?: string | undefined;
-    book_publication_year?: number | undefined;
-    book_title?: string | undefined;
-    genre_id?: number | undefined;
-    genre_name?: string | undefined;
-    rating: number;
-}
-export interface maprecentdata {
-    prime_book_id: number;
-    author_name: string;
-    book_img: string;
-    book_publication_year: number;
-    book_title: string;
-    genre_id: number;
-    genre_name: string;
-    rating: number;
-    book_id: number;
-    borrow_date: string | Date;
-}
-export interface finalresultdata {
-    prime_book_id: number;
-    rating: number;
-    author_name: string;
-    book_img: string;
-    book_publication_year: number;
-    book_title: string;
-    genre_id: number;
-    genre_name: string;
-}
-export interface issueuser {
-    reader_id: number
-    book_id: number
-    borrow_date: Date | string
-    status: string
-    prime_book_id: number
-}
-export interface list {
-    reader_id: number;
-    prime_book_id: number;
-}
-export interface data {
-    prime_book_id: number;
-    author_name?: string | undefined;
-    book_img?: string | undefined;
-    book_publication_year?: number | undefined;
-    book_title?: string | undefined;
-    genre_id?: number | undefined;
-    genre_name?: string | undefined;
-    rating?: number | undefined;
-    reader_id: number;
-}
-export interface finallist {
-    prime_book_id: number;
-    rating?: number | undefined;
-    author_name?: string | undefined;
-    book_img?: string | undefined;
-    book_publication_year?: number | undefined;
-    book_title?: string | undefined;
-    genre_id?: number | undefined;
-    genre_name?: string | undefined;
-    reader_id: number;
-}
-
-export interface userissue {
-    prime_book_id: number;
-    rating?: number | undefined;
-    reader_id: number;
-    book_id: number;
-    borrow_date: string | Date;
-    status: string;
-}
-export interface finalissuebook {
-    prime_book_id: number;
-    author_name?: string | undefined;
-    book_img?: string | undefined;
-    book_publication_year?: number | undefined;
-    book_title?: string | undefined;
-    genre_id?: number | undefined;
-    status: string;
 }
