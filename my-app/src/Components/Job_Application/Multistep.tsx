@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
+// import * as yup from "yup";
+// import { yupResolver } from "@hookform/resolvers/yup";
 import Basic_Detail from "./Basic_Detail";
 import Education from "./Education";
 import Experience from "./Experience";
@@ -9,42 +9,41 @@ import Language from "./Language";
 import Relation from "./Relation";
 import Preferance from "./Preferences";
 import "./form.css";
-import { FormData } from "../interfacefile";
+import { FormData, propState } from "../interfacefile";
 import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
 
-// const schema = yup.object().shape({
-//     fname: yup.string().required('FirstName is Required!!'),
-//     lname: yup.string().required('LastName is Required!!'),
-//     designa: yup.string().required('Designation is Required!!'),
-//     bd: yup.string().required('Date is Required!!'),
-//     email: yup.string().email("Invalid Email").required('Designation is Required!!'),
-//     phone: yup.string().max(10, "Invalid Number").min(10, "Invalid Number").required('Designation is Required!!'),
-//     zipcode: yup.string().required('Zipcode is Required!!'),
-//     address1: yup.string().required('Address is Required!!'),
-//     city: yup.string().required('City is Required!!'),
-//     state: yup.string().required('State is Required!!'),
-//     gender: yup.string().required('Gender is Required!!'),
-//     notice: yup.string().required('Notice Period is Required!!'),
-//     exctc: yup.string().required('Expected CTC is Required!!'),
-//     curctc: yup.string().required('Current CTC is Required!!'),
-//     name1: yup.string().required('FirstName is Required!!'),
-//     mobileno1: yup.string().required('FirstName is Required!!') ,
-//     rel1: yup.string().required('FirstName is Required!!') ,
-//     board_name: yup.string().required('FirstName is Required!!') ,
-//     py: yup.string().required('FirstName is Required!!'),
-//     percentage: yup.string().required('FirstName is Required!!') ,
-//     companyname: yup.string().required('FirstName is Required!!'),
-//     designation: yup.string().required('FirstName is Required!!'),
-//     from: yup.string().required('FirstName is Required!!'),
-//     to: yup.string().required('FirstName is Required!!') ,
-//     name: yup.string().required('FirstName is Required!!'),
-//     mobileno: yup.string().required('FirstName is Required!!') ,
-//     rel: yup.string().required('FirstName is Required!!') ,
-// })
 function Multistepform() {
+    const location = useLocation();
+    const [id, setid] = useState<string>("")
+    const navigate = useNavigate();
     const [step, setStep] = useState<number>(1);
     const [formdata, setFormdata] = useState<FormData>({} as FormData);
     const method = useForm<FormData>({ mode: 'onBlur', defaultValues: formdata });
+
+    useEffect(() => {
+        if (location.state) {
+            const { id } = location.state as propState;
+            setid(id);
+        }
+    }, [location.state])
+    useEffect(() => {
+        if (id) {
+            const getempdata = async () => {
+                try {
+                    console.log(id);
+                    const response = await axios.get(`http://localhost:3036/fetchempdata/${id}`);
+                    console.log(response);
+
+                    // const emp = (response.data.result);
+                    // setFormData(emp);
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+            getempdata();
+        }
+    }, [id])
 
     const prevstep = () => {
         setFormdata((prev) => ({ ...prev, ...method.getValues() }))
@@ -60,6 +59,9 @@ function Multistepform() {
     const onSubmit: SubmitHandler<FormData> = async (data) => {
         console.log(data, "data");
         const result = await axios.post(`http://localhost:3036/insertform`, data, { withCredentials: true });
+        if (result.data.msg === "Success") {
+            navigate("/fetchemp")
+        }
     }
     return (
         <FormProvider {...method}>

@@ -73,14 +73,14 @@ export interface FormData {
     board_name2: string;
     board_name3: string;
     board_name4: string;
-    py1: string;
-    py2: string;
-    py3: string;
-    py4: string;
-    percentage1: string;
-    percentage2: string;
-    percentage3: string;
-    percentage4: string;
+    py1: number;
+    py2: number;
+    py3: number;
+    py4: number;
+    percentage1: number;
+    percentage2: number;
+    percentage3: number;
+    percentage4: number;
 
     companyname1: string;
     designation1: string
@@ -94,6 +94,28 @@ export interface FormData {
     designation3: string
     date31: Date;
     date32: Date;
+
+    hindi: string;
+    english: string;
+    gujarati: string;
+    read1: string;
+    write1: string;
+    speak1: string;
+    read2: string;
+    write2: string;
+    speak2: string;
+    read3: string;
+    write3: string;
+    speak3: string;
+
+    php: string;
+    level1: string;
+    mysql: string;
+    level2: string;
+    laravel: string;
+    level3: string;
+    oracle: string;
+    level4: string;
 
     name1: string;
     mobileno1: string;

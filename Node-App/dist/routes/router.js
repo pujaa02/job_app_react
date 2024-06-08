@@ -28,11 +28,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = __importStar(require("express"));
 const route = express.Router();
-// import form from "../controller/form";
 const userauthenticate_1 = __importDefault(require("../controller/userauthenticate"));
 const ajaxform_1 = __importDefault(require("../controller/ajaxform"));
-const fetchuser_1 = __importDefault(require("../controller/fetchuser"));
-// import updateform from "../controller/updateform";
+const fetchempdata_1 = __importDefault(require("../controller/fetchempdata"));
 route.post("/register", userauthenticate_1.default.register);
 route.get("/activatecheck/:user_id", userauthenticate_1.default.activatecheck);
 route.get("/deleteuser/:id", userauthenticate_1.default.deleteuser);
@@ -41,10 +39,8 @@ route.get("/checkuser/:email/:pass", userauthenticate_1.default.checkuser);
 route.get("/finduser/:email", userauthenticate_1.default.finduser);
 //insert form
 route.post("/insertform", ajaxform_1.default.insertform);
-// route.post("/submit", form.submit);
-route.get("/getallemp", fetchuser_1.default.getallemp);
-// route.get("/findemp/:id", updateform.findemp);
-// route.post("/updateemp/:id", updateform.updateemp);
-// route.get("/deleteemp/:id", updateform.deletemp);
+//fetchallempdata
+route.get("/employees", fetchempdata_1.default.get_user);
+route.get("/fetchempdata/:id", fetchempdata_1.default.emp_det);
 exports.default = route;
 //# sourceMappingURL=router.js.map

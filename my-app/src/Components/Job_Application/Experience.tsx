@@ -38,7 +38,7 @@ const Experience: React.FC = () => {
                             <div className="col">
                                 <label htmlFor="date">From</label>
                                 <input
-                                    type="text"
+                                    type="date"
                                     className="duration form-control"
                                     id="date11"
                                     {...register("date11", {
@@ -50,7 +50,7 @@ const Experience: React.FC = () => {
                             <div className="col">
                                 <label htmlFor="date">To</label>
                                 <input
-                                    type="text"
+                                    type="date"
                                     id="date12"
                                     {...register("date12", {
                                         required: false
@@ -88,7 +88,7 @@ const Experience: React.FC = () => {
                             <div className="col">
                                 <label htmlFor="date">From</label>
                                 <input
-                                    type="text"
+                                    type="date"
                                     id="date21"
                                     {...register("date21", {
                                         required: false
@@ -100,7 +100,7 @@ const Experience: React.FC = () => {
                             <div className="col">
                                 <label htmlFor="date">To</label>
                                 <input
-                                    type="text"
+                                    type="date"
                                     id="date22"
                                     {...register("date22", {
                                         required: false
@@ -138,7 +138,7 @@ const Experience: React.FC = () => {
                             <div className="col">
                                 <label htmlFor="date">From</label>
                                 <input
-                                    type="text"
+                                    type="date"
                                     id="date31"
                                     {...register("date31", {
                                         required: false
@@ -150,7 +150,7 @@ const Experience: React.FC = () => {
                             <div className="col">
                                 <label htmlFor="date">To</label>
                                 <input
-                                    type="text"
+                                    type="date"
                                     id="date32"
                                     {...register("date32", {
                                         required: false

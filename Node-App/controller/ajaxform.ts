@@ -2,7 +2,7 @@ import * as express from "express";
 const route = express.Router();
 import { Request, Response } from "express";
 import { FormData, Ids } from "../interfacefile";
-// import checkAuth from "../middlewares/checkauth";
+
 import con from "../models/database";
 import { Result, ValidationError, check, validationResult } from "express-validator";
 import parser from "body-parser";
@@ -10,193 +10,139 @@ route.use(parser.json());
 route.use(parser.urlencoded({ extended: false }));
 const urlencodedParser = parser.urlencoded({ extended: false });
 
-// import get_user from "./ajaxinsertupdate/get_user";
-// import get_emp from "./ajaxinsertupdate/get_emp_det"
-// import edu_det from "./ajaxinsertupdate/get_edu_det";
-// import work_exp from "./ajaxinsertupdate/work_exp";
-// import lan from "./ajaxinsertupdate/language";
-// import techno from "./ajaxinsertupdate/techno";
-// import ref from "./ajaxinsertupdate/ref";
-// import pre from "./ajaxinsertupdate/pre";
 
-// route.get("/users", checkAuth, get_user);
-// route.get("/emp", checkAuth, get_emp);
-// route.get("/edu", checkAuth, edu_det);
-// route.get("/work", checkAuth, work_exp);
-// route.get("/lan", checkAuth, lan);
-// route.get("/tech", checkAuth, techno);
-// route.get("/ref", checkAuth, ref);
-// route.get("/pre", checkAuth, pre);
-
-
-
-interface IStringArray extends Array<string | number | boolean> { }
-interface Idofparams {
-    id: number
-}
+interface IStringArray extends Array<string | number | Date | boolean> { }
 
 const insertform = async (req: Request, res: Response) => {
-    console.log("hwello");
-
-    console.log(req.body.fname, "body");
-    console.log(req.body);
-
     const formData: FormData = req.body;
-    // let id: number;
+    let id: number;
 
-    // const {
-    //     fname,
-    //     lname,
-    //     designa: designation,
-    //     email,
-    //     number: phone,
-    //     gender,
-    //     relstatus: rel_status,
-    //     add1: address1,
-    //     add2: address2,
-    //     city,
-    //     state,
-    //     zipcode,
-    //     dob: bd,
-    // } = formData;
 
-    // const edu: IStringArray = ["ssc", "hsc", "bachelor", "master"];
+    try {
+        const values: IStringArray = [
+            formData.fname,
+            formData.lname,
+            formData.designa,
+            formData.email,
+            formData.phone,
+            formData.gender,
+            formData.rel_status,
+            formData.address1,
+            formData.address2,
+            formData.city,
+            formData.state,
+            formData.zipcode,
+            formData.bd,
+        ];
+        const emp_detail: number = await con.insert(`INSERT INTO emp_details (fname, lname, designation, email, phone, gender, rel_status, address1, address2, city, state, zipcode, bd) VALUES (?)`, [values]);
 
-    // const lan1: IStringArray = ["", "", ""];
-    // const lan2: IStringArray = ["", "", ""];
-    // const lan3: IStringArray = ["", "", ""];
-    // lan1[1] = formData.lan1;
-    // if (formData.able1) {
-    //     lan1[2] = formData.able1.toString();
-    // }
-    // lan2[1] = formData.lan2;
-    // if (formData.able2) {
-    //     lan2[2] = formData.able2.toString();
-    // }
-    // lan3[1] = formData.lan3;
-    // if (formData.able3) {
-    //     lan3[2] = formData.able3.toString();
-    // }
+        id = emp_detail;
 
-    // const tech1: IStringArray = ["", "", ""];
-    // const tech2: IStringArray = ["", "", ""];
-    // const tech3: IStringArray = ["", "", ""];
-    // const tech4: IStringArray = ["", "", ""];
-    // tech1[1] = formData.tech1;
-    // tech1[2] = formData.level1;
-    // tech2[1] = formData.tech2;
-    // tech2[2] = formData.level2;
-    // tech3[1] = formData.tech3;
-    // tech3[2] = formData.level3;
-    // tech4[1] = formData.tech4;
-    // tech4[2] = formData.level4;
+        const edu: IStringArray = ["ssc", "hsc", "bachelor", "master"];
+        let board: Array<string> = [];
+        let board_percentage: Array<number> = [];
+        let pass_year: Array<number> = [];
+        board.push(formData.board_name1, formData.board_name2, formData.board_name3, formData.board_name4);
+        board_percentage.push(formData.percentage1, formData.percentage2, formData.percentage3, formData.percentage4);
+        pass_year.push(formData.py1, formData.py2, formData.py3, formData.py4);
 
-    // const ref1: IStringArray = ["", "", "", ""];
-    // const ref2: IStringArray = ["", "", "", ""];
-    // const ref3: IStringArray = ["", "", "", ""];
-    // ref1[1] = formData.name1;
-    // ref1[2] = formData.mobileno1;
-    // ref1[3] = formData.rel1;
-    // ref2[1] = formData.name2;
-    // ref2[2] = formData.mobileno2;
-    // ref2[3] = formData.rel2;
-    // ref3[1] = formData.name3;
-    // ref3[2] = formData.mobileno3;
-    // ref3[3] = formData.rel3;
+        for (let i = 0; i < 4; i++) {
+            const eduValues: IStringArray = [
+                id,
+                edu[i],
+                board[i],
+                pass_year[i],
+                board_percentage[i],
+            ];
+            if (board[i] !== "") {
+                await con.insert(`INSERT INTO edu_detail (emp_id, type_of_result, Name_of_board_or_course, Passing_year, Percentage) VALUES (?)`, [eduValues]);
+            }
+        }
+        let company_name: Array<string> = [];
+        let designation: Array<string> = [];
+        let from_date: Array<Date> = [];
+        let to_date: Array<Date> = [];
 
-    // const pre: IStringArray = ["", "", "", "", "", ""];
-    // pre[1] = formData.preloc;
-    // pre[2] = formData.notice;
-    // pre[3] = formData.exctc;
-    // pre[4] = formData.curctc;
-    // pre[5] = formData.depa;
 
-    // const values: IStringArray = [
-    //     fname,
-    //     lname,
-    //     designation,
-    //     email,
-    //     phone,
-    //     gender,
-    //     rel_status,
-    //     address1,
-    //     address2,
-    //     city,
-    //     state,
-    //     zipcode,
-    //     bd,
-    // ];
+        company_name.push(formData.companyname1, formData.companyname2, formData.companyname3);
+        designation.push(formData.designation1, formData.designation2, formData.designation3);
+        from_date.push(formData.date11, formData.date21, formData.date31);
+        to_date.push(formData.date12, formData.date22, formData.date32);
 
-    // const emp_detail: number = await con.insert(`INSERT INTO emp_details (fname, lname, designation, email, phone, gender, rel_status, address1, address2, city, state, zipcode, bd) VALUES (?)`, [values]);
+        for (let i = 0; i < 3; i++) {
+            const workValues: IStringArray = [
+                id,
+                company_name[i],
+                designation[i],
+                from_date[i],
+                to_date[i],
+            ];
+            if (company_name[i] !== "") {
+                await con.insert(`INSERT INTO work_experience (emp_id, company_name, designation, from_date, to_date) VALUES (?)`, [workValues]);
+            }
+        }
 
-    // id = emp_detail;
-    // const len: number = formData.board_name.length;
+        let language: Array<string | boolean> = [];
+        let able: Array<string> = [];
+        language.push(formData.hindi, formData.english, formData.gujarati);
 
-    // for (let i = 0; i < len; i++) {
-    //     const eduValues: IStringArray = [
-    //         id,
-    //         edu[i],
-    //         formData.board_name[i],
-    //         formData.py[i],
-    //         formData.percentage[i],
-    //     ];
-    //     if (formData.board_name[i]) {
-    //         const educationdata: number = await con.insert(`INSERT INTO edu_detail (emp_id, type_of_result, Name_of_board_or_course, Passing_year, Percentage) VALUES (?)`, [eduValues]);
-    //     }
-    // }
-    // const wklen: number = formData.companyname.length;
-    // for (let i = 0; i < wklen; i++) {
-    //     const workValues: IStringArray = [
-    //         id,
-    //         formData.companyname[i],
-    //         formData.designation[i],
-    //         formData.from[i],
-    //         formData.to[i],
-    //     ];
-    //     if (formData.companyname[i]) {
-    //         const workdata: number = await con.insert(`INSERT INTO work_experience (emp_id, company_name, designation, from_date, to_date) VALUES (?)`, [workValues]);
-    //     }
-    // }
-    // if (formData.lan1) {
-    //     lan1[0] = id;
-    //     const landata1: number = await con.insert(`INSERT INTO language (emp_id, language_know, rws) VALUES (?)`, [lan1]);
-    // }
-    // if (formData.lan2) {
-    //     lan2[0] = id;
-    //     const landata2: number = await con.insert(`INSERT INTO language (emp_id, language_know, rws) VALUES (?)`, [lan2]);
-    // }
-    // if (formData.lan3) {
-    //     lan3[0] = id;
-    //     const landata3: number = await con.insert(`INSERT INTO language (emp_id, language_know, rws) VALUES (?)`, [lan3]);
-    // }
-    // // ======  techno ===
-    // tech1[0] = id;
-    // if (formData.tech1) {
-    //     const techdata1: number = await con.insert(`insert into know_techno(emp_id,tech_know ,level_of_technology) values( ? )`, [tech1]);
-    // }
-    // tech2[0] = id;
-    // if (formData.tech2) {
-    //     const techdata2: number = await con.insert(`insert into know_techno(emp_id,tech_know ,level_of_technology) values( ? )`, [tech2]);
-    // }
-    // tech3[0] = id;
-    // if (formData.tech3) {
-    //     const techdata3: number = await con.insert(`insert into know_techno(emp_id,tech_know ,level_of_technology) values( ? )`, [tech3]);
-    // }
-    // tech4[0] = id;
-    // if (formData.tech4) {
-    //     const techdata4: number = await con.insert(`insert into know_techno(emp_id,tech_know ,level_of_technology) values( ? )`, [tech4]);
-    // }
-    // //section ref
-    // const reflen = formData.name;
-    // for (let i = 0; i < reflen.length; i++) {
-    //     if (formData.name[i]) {
-    //         const refdata: number = await con.insert(`insert into reference_contact(emp_id, name ,contact_number ,relation) values('${id}','${formData.name[i]}','${formData.mobileno[i]}','${formData.rel[i]}')`);
-    //     }
-    // }
-    // //section ended
-    // pre[0] = id;
-    // const predata: number = await con.insert(`insert into preferences(emp_id, prefered_location,notice_period , expected_ctc,current_ctc , department) values( ? )`, [pre]);
-    // res.json(id)
+        able.push((formData.read1 + ',' + formData.write1 + ',' + formData.speak1).toString(), (formData.read2 + ',' + formData.write2 + ',' + formData.speak2).toString(), (formData.read3 + ',' + formData.write3 + ',' + formData.speak3).toString());
+
+        for (let i = 0; i < 3; i++) {
+            const language_table: IStringArray = [
+                id,
+                language[i],
+                able[i],
+            ];
+            if (language[i] !== false) {
+                await con.insert(`INSERT INTO language (emp_id, language_know, rws) VALUES (?)`, [language_table]);
+            }
+        }
+
+        let tech: Array<string | boolean> = [];
+        let level: Array<string | boolean> = [];
+
+        tech.push(formData.php, formData.mysql, formData.laravel, formData.oracle);
+        level.push(formData.level1, formData.level2, formData.level3, formData.level4);
+
+        for (let i = 0; i < 4; i++) {
+            const tech_table: IStringArray = [
+                id,
+                tech[i],
+                level[i],
+            ];
+            if (tech[i] !== false) {
+                await con.insert(`insert into know_techno(emp_id,tech_know ,level_of_technology) values( ? )`, [tech_table]);
+            }
+        }
+
+        let name: Array<string> = [];
+        let mobileno: Array<string | number> = [];
+        let rel: Array<string> = [];
+
+        name.push(formData.name1, formData.name2, formData.name3);
+        mobileno.push(formData.mobileno1, formData.mobileno2, formData.mobileno3);
+        rel.push(formData.rel1, formData.rel2, formData.rel3);
+
+        for (let i = 0; i < 3; i++) {
+            const relation: IStringArray = [
+                id,
+                name[i],
+                mobileno[i],
+                rel[i],
+            ];
+            if (name[i] !== "") {
+                await con.insert(`insert into reference_contact(emp_id, name ,contact_number ,relation) values ( ? )`, [relation]);
+            }
+        }
+        let pre: Array<string | number> = [id, formData.preloc, formData.notice, formData.exctc, formData.curctc, formData.depa]
+        await con.insert(`insert into preferences(emp_id, prefered_location,notice_period , expected_ctc,current_ctc , department) values( ? )`, [pre]);
+
+        res.json({ msg: "Success" })
+    } catch (error) {
+        res.json({ msg: "Failed" })
+    }
+
 }
 
 export default { insertform };

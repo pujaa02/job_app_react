@@ -13,7 +13,7 @@ const Relation: React.FC = () => {
                     <div className="container_of_reference">
                         <div className="row">
                             <div className="col">
-                                <label htmlFor="name"> Name</label>
+                                <label htmlFor="name1"> Name</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -25,7 +25,7 @@ const Relation: React.FC = () => {
                                 {errors.name1 && <p className="red">{errors.name1.message}</p>}
                             </div>
                             <div className="col">
-                                <label htmlFor="mobile_no">Contact Number</label>
+                                <label htmlFor="mobile_no1">Contact Number</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -37,7 +37,7 @@ const Relation: React.FC = () => {
                                 {errors.mobileno1 && <p className="red">{errors.mobileno1.message}</p>}
                             </div>
                             <div className="col">
-                                <label htmlFor="rel">Relation</label>
+                                <label htmlFor="rel1">Relation</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -51,7 +51,7 @@ const Relation: React.FC = () => {
                         </div>
                         <div className="row">
                             <div className="col">
-                                <label htmlFor="name"> Name</label>
+                                <label htmlFor="name2"> Name</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -63,18 +63,18 @@ const Relation: React.FC = () => {
 
                             </div>
                             <div className="col">
-                                <label htmlFor="mobile_no">Contact Number</label>
+                                <label htmlFor="mobile_no2">Contact Number</label>
                                 <input
                                     type="text"
                                     className="form-control"
                                     id="mobileno2"
-                                    {...register("mobileno1", {
+                                    {...register("mobileno2", {
                                         required: false
                                     })}
                                 />
                             </div>
                             <div className="col">
-                                <label htmlFor="rel">Relation</label>
+                                <label htmlFor="rel2">Relation</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -88,7 +88,7 @@ const Relation: React.FC = () => {
                         </div>
                         <div className="row">
                             <div className="col">
-                                <label htmlFor="name"> Name</label>
+                                <label htmlFor="name3"> Name</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -100,7 +100,7 @@ const Relation: React.FC = () => {
                               
                             </div>
                             <div className="col">
-                                <label htmlFor="mobile_no">Contact Number</label>
+                                <label htmlFor="mobile_no3">Contact Number</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -112,7 +112,7 @@ const Relation: React.FC = () => {
                                
                             </div>
                             <div className="col">
-                                <label htmlFor="rel">Relation</label>
+                                <label htmlFor="rel3">Relation</label>
                                 <input
                                     type="text"
                                     className="form-control"
