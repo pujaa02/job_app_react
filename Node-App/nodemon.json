@@ -1,4 +1,0 @@
-{
-    "watch": ["**/*"],
-    "ext": "ts,tsc,tsx,js, css"
-  }

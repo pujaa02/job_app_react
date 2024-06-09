@@ -19,6 +19,4 @@ route.post("/insertform", Ajaxform.insertform);
 route.get("/employees", fetchempdata.get_user);
 route.get("/fetchempdata/:id", fetchempdata.emp_det);
 
-
-
 export default route;

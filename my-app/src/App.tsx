@@ -10,7 +10,6 @@ import Wrong from "./Components/wrongurl/Wrong";
 import ForgetPass from "./Components/forgetpassword/ForgetPass";
 import Multistepform from "./Components/Job_Application/Multistep";
 
-
 const App: React.FC = () => {
   return (
     <div className="App">
@@ -23,6 +22,7 @@ const App: React.FC = () => {
         <Route path="/forget" element={<ForgetPass />}></Route>
         <Route path="*" element={<Wrong />}></Route>
         <Route path="/form" element={<Multistepform />}></Route>
+        <Route path="/updateform" element={<Multistepform />}></Route>
       </Routes>
     </div>
   );
