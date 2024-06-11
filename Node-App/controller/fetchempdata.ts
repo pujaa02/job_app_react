@@ -43,9 +43,6 @@ async function emp_det(req: Request, res: Response) {
     `select * from preferences where emp_id=${id}`
   );
 
-  let emp_details: Array<string | number | Date> = [];
-  let preferances: Array<string> = [];
-
   let board_name: Array<string> = [];
   let py: Array<number | string> = [];
   let percentage: Array<number | string> = [];
@@ -73,6 +70,104 @@ async function emp_det(req: Request, res: Response) {
     designation.push(workexp[i].designation);
     from.push(workexp[i].from_date);
     to.push(workexp[i].to_date);
+  }
+
+  let hindi: string = "";
+  let english: string = "";
+  let gujarati: string = "";
+  let read1: string = "";
+  let read2: string = "";
+  let read3: string = "";
+  let write1: string = "";
+  let write2: string = "";
+  let write3: string = "";
+  let speak1: string = "";
+  let speak2: string = "";
+  let speak3: string = "";
+
+
+
+
+  for (let i = 0; i < language.length; i++) {
+    switch (language[i].language_know) {
+      case "hindi":
+        hindi = "hindi";
+        let rws: string[] = (language[i].rws).split(",");
+        for (let j = 0; j < rws.length; j++) {
+          if (rws[j] === "read") {
+            read1 = "read1"
+          }
+          if (rws[j] === "write") {
+            write1 = "write1"
+          }
+          if (rws[j] === "speak") {
+            speak1 = "speak1"
+          }
+        }
+        break;
+      case "english":
+        english = "english"
+        let rws2: string[] = (language[i].rws).split(",");
+        for (let j = 0; j < rws2.length; j++) {
+          if (rws2[j] === "read") {
+            read2 = "read2"
+          }
+          if (rws2[j] === "write") {
+            write2 = "write2"
+          }
+          if (rws2[j] === "speak") {
+            speak2 = "speak2"
+          }
+        }
+        break;
+      case "gujarati":
+        gujarati = "gujarati"
+        let rws3: string[] = (language[i].rws).split(",");
+        for (let j = 0; j < rws3.length; j++) {
+          if (rws3[j] === "read") {
+            read3 = "read3"
+          }
+          if (rws3[j] === "write") {
+            write3 = "write3"
+          }
+          if (rws3[j] === "speak") {
+            speak3 = "speak3"
+          }
+        }
+        break;
+      default:
+      // code block
+    }
+  }
+  let php: string = "";
+  let level1: string = "";
+  let mysql: string = "";
+  let level2: string = "";
+  let laravel: string = "";
+  let level3: string = "";
+  let oracle: string = "";
+  let level4: string = "";
+
+  for (let i = 0; i < technology.length; i++) {
+    switch (technology[i].tech_know) {
+      case "php":
+        php = "php";
+        level1 = technology[i].level_of_technology;
+        break;
+      case "mysql":
+        mysql = "mysql"
+        level2 = technology[i].level_of_technology;
+        break;
+      case "laravel":
+        laravel = "laravel"
+        level3 = technology[i].level_of_technology;
+      case "oracle":
+        oracle = "oracle"
+        level4 = technology[i].level_of_technology;
+        break;
+      default:
+      // code block
+    }
   }
 
   let name: Array<string> = [];
@@ -105,6 +200,26 @@ async function emp_det(req: Request, res: Response) {
     designation,
     from,
     to,
+    hindi,
+    english,
+    gujarati,
+    read1,
+    read2,
+    read3,
+    write1,
+    write2,
+    write3,
+    speak1,
+    speak2,
+    speak3,
+    php,
+    level1,
+    mysql,
+    level2,
+    laravel,
+    level3,
+    oracle,
+    level4,
     name,
     mobileno,
     rel,

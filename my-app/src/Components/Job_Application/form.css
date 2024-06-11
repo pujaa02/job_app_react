@@ -6,7 +6,14 @@
   background-color: #ffffff;
   margin: 2rem auto;
 }
-
+.container_of_experience_form {
+  width: 1150px;
+  padding: 20px;
+  border: 4px solid #376ba0;
+  border-radius: 5px;
+  background-color: #ffffff;
+  margin: 2rem auto;
+}
 .denied {
   background-color: #ffffff;
 }
@@ -85,4 +92,26 @@ td {
 }
 .red {
   color: red;
+}
+#insertbtn {
+  margin: 10px;
+  background-color: green;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+}
+#insertbtn:hover{
+  background-color: rgb(15, 145, 15);
+}
+#del_btn{
+  margin: 15px;
+  background-color: red;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  /* color: white; */
+}
+#del_btn:hover{
+  background-color: rgb(226, 44, 44);
 }

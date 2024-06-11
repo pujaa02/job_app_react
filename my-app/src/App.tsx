@@ -14,15 +14,15 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <Routes>
-        <Route path="/login" element={<Login />}></Route>
         <Route path="/" element={<Register />}></Route>
-        <Route path="/fetchemp" element={<Fetchemp />}></Route>
         <Route path="/activate/:actcode" element={<Activate />}></Route>
         <Route path="/password" element={<Password />}></Route>
+        <Route path="/login" element={<Login />}></Route>
         <Route path="/forget" element={<ForgetPass />}></Route>
-        <Route path="*" element={<Wrong />}></Route>
         <Route path="/form" element={<Multistepform />}></Route>
+        <Route path="/fetchemp" element={<Fetchemp />}></Route>
         <Route path="/updateform" element={<Multistepform />}></Route>
+        <Route path="*" element={<Wrong />}></Route>
       </Routes>
     </div>
   );

@@ -3,6 +3,7 @@ const route = express.Router();
 import userauthenticate from "../controller/userauthenticate";
 import Ajaxform from "../controller/ajaxform";
 import fetchempdata from "../controller/fetchempdata";
+import fetchstatedata from "../controller/fetchstatedata";
 
 route.post("/register", userauthenticate.register);
 route.get("/activatecheck/:user_id", userauthenticate.activatecheck);
@@ -13,10 +14,17 @@ route.get("/finduser/:email", userauthenticate.finduser);
 
 //insert form
 route.post("/insertform", Ajaxform.insertform);
+route.post("/updateform/:id", Ajaxform.updateform);
 
 //fetchallempdata
 
 route.get("/employees", fetchempdata.get_user);
 route.get("/fetchempdata/:id", fetchempdata.emp_det);
+
+//fetchstatedata
+
+route.get("/state", fetchstatedata.get_state);
+route.get("/cities/:id", fetchstatedata.get_cities);
+
 
 export default route;

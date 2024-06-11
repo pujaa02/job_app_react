@@ -8,7 +8,7 @@ const Relation: React.FC = () => {
     watch,
   } = useFormContext<FormData>();
 
-  const phoneValidationPattern = /^[0-9]{10}$/;
+  const phoneValidationPattern = /^[7-9][0-9]{9}$/;
 
   const name = watch("name") || [];
   const mobileno = watch("mobileno") || [];

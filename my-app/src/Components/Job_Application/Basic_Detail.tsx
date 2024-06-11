@@ -5,6 +5,7 @@ import axios from "axios";
 
 const Basic_Detail: React.FC = () => {
     const [state, setState] = useState([]);
+    const [city, setCity] = useState([]);
     const {
         register,
         formState: { errors }, watch
@@ -28,8 +29,11 @@ const Basic_Detail: React.FC = () => {
         const result = await axios.get(`http://localhost:3036/state`, { withCredentials: true });
         setState(result.data);
     }
-    const changecity = async () => {
-        console.log(state.values);
+    const changecity = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const id: string = event.target.value;
+        const result = await axios.get(`http://localhost:3036/cities/${id}`, { withCredentials: true });
+        setCity(result.data);
+        return true;
     }
     useEffect(() => {
         fetchstate();
@@ -158,24 +162,29 @@ const Basic_Detail: React.FC = () => {
                     <div className="row">
                         <div className="col form-group">
                             <label htmlFor="state">State:</label>
-                            <select id="state" className="form-control" name="state" onChange={changecity}
+                            <select id="state" className="form-control"  {...register("state", {
+                                required: "State is Required",
+                                onChange: (e) => { changecity(e) }
+                            })}
                             >
+                                <option value="">Select State</option>
                                 {state.map((data: State) => (
-                                    <option value={data.id}>{data.name}</option>
+                                    <option key={data.id} value={data.id}>{data.name}</option>
                                 ))}
                             </select>
                             {errors.state && <p className="red">{errors.state.message}</p>}
                         </div>
                         <div className="col form-group">
                             <label htmlFor="city">City:</label>
-                            <input
-                                type="text"
-                                id="city"
-                                className="form-control"
-                                {...register("city", {
-                                    required: "City is Required!!",
-                                })}
-                            />
+                            <select id="city" className="form-control"   {...register("city", {
+                                required: "City is Required"
+                            })}
+                            >
+                                <option value="">Select City</option>
+                                {city.map((data: City) => (
+                                    <option key={data.id} value={data.id}>{data.city}</option>
+                                ))}
+                            </select>
                             {errors.city && <p className="red">{errors.city.message}</p>}
                         </div>
                         <div className="col form-group">
