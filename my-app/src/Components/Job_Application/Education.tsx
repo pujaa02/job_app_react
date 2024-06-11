@@ -1,4 +1,3 @@
-// src/components/Education.tsx
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { FormData } from "../interfacefile";
@@ -10,19 +9,22 @@ const Education: React.FC = () => {
     watch,
   } = useFormContext<FormData>();
 
-  // Watching the values of the fields
+
   const boardNames = watch("board_name") || [];
   const py = watch("py") || [];
   const percentages = watch("percentage") || [];
 
-  // Custom validation function
   const validateRow = (boardName: string, py: number, percentage: number) => {
+    const date: Date = new Date()
+    const curyear: number = date.getFullYear();
+    if (py > curyear) {
+      return "Please Enter Valid Year";
+    }
     const filled = [boardName, py, percentage].filter(
       (value) => value !== undefined && value !== ""
     ).length;
     return filled === 0 || filled === 3;
   };
-
   return (
     <div className="application-form-container">
       <form>
