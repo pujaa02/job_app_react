@@ -9,22 +9,35 @@ const Education: React.FC = () => {
     watch,
   } = useFormContext<FormData>();
 
-
   const boardNames = watch("board_name") || [];
   const py = watch("py") || [];
   const percentages = watch("percentage") || [];
 
-  const validateRow = (boardName: string, py: number, percentage: number) => {
-    const date: Date = new Date()
-    const curyear: number = date.getFullYear();
+  const validateYear = (py: number) => {
+    const date = new Date();
+    const curyear = date.getFullYear();
     if (py > curyear) {
-      return "Please Enter Valid Year";
+      return "Please enter a valid year";
     }
+    return true;
+  };
+
+  const validateRow = (boardName: string, py: number, percentage: number) => {
     const filled = [boardName, py, percentage].filter(
       (value) => value !== undefined && value !== ""
     ).length;
-    return filled === 0 || filled === 3;
+    if (filled === 0) return true; // Empty row is valid
+    if (filled === 3) {
+      const date = new Date();
+      const curyear = date.getFullYear();
+      if (py > curyear) {
+        return "Please enter a valid year";
+      }
+      return true; // Fully filled row is valid
+    }
+    return "Fill all fields in this row if any is filled"; // Partially filled row is invalid
   };
+
   return (
     <div className="application-form-container">
       <form>
@@ -42,9 +55,7 @@ const Education: React.FC = () => {
                   className="form-control"
                   id="board1"
                   {...register("board_name.0", {
-                    validate: () =>
-                      validateRow(boardNames[0], py[0], percentages[0]) ||
-                      "Fill all fields in this row if any is filled",
+                    validate: () => validateRow(boardNames[0], py[0], percentages[0]),
                   })}
                 />
                 {errors.board_name && errors.board_name[0] && (
@@ -58,9 +69,7 @@ const Education: React.FC = () => {
                   className="form-control"
                   id="py1"
                   {...register("py.0", {
-                    validate: () =>
-                      validateRow(boardNames[0], py[0], percentages[0]) ||
-                      "Fill all fields in this row if any is filled",
+                    validate: validateYear,
                     pattern: {
                       value: /^[0-9]{4}$/,
                       message: "Passing year must be a 4-digit number",
@@ -78,9 +87,7 @@ const Education: React.FC = () => {
                   className="form-control"
                   id="percentage1"
                   {...register("percentage.0", {
-                    validate: () =>
-                      validateRow(boardNames[0], py[0], percentages[0]) ||
-                      "Fill all fields in this row if any is filled",
+                    validate: () => validateRow(boardNames[0], py[0], percentages[0]),
                     pattern: {
                       value: /^[0-9]{2}$/,
                       message: "Percentage must be a 2-digit number",
@@ -102,9 +109,7 @@ const Education: React.FC = () => {
                   className="form-control"
                   id="board2"
                   {...register("board_name.1", {
-                    validate: () =>
-                      validateRow(boardNames[1], py[1], percentages[1]) ||
-                      "Fill all fields in this row if any is filled",
+                    validate: () => validateRow(boardNames[1], py[1], percentages[1]),
                   })}
                 />
                 {errors.board_name && errors.board_name[1] && (
@@ -118,9 +123,7 @@ const Education: React.FC = () => {
                   className="form-control"
                   id="py2"
                   {...register("py.1", {
-                    validate: () =>
-                      validateRow(boardNames[1], py[1], percentages[1]) ||
-                      "Fill all fields in this row if any is filled",
+                    validate: validateYear,
                     pattern: {
                       value: /^[0-9]{4}$/,
                       message: "Passing year must be a 4-digit number",
@@ -138,9 +141,7 @@ const Education: React.FC = () => {
                   className="form-control"
                   id="percentage2"
                   {...register("percentage.1", {
-                    validate: () =>
-                      validateRow(boardNames[1], py[1], percentages[1]) ||
-                      "Fill all fields in this row if any is filled",
+                    validate: () => validateRow(boardNames[1], py[1], percentages[1]),
                     pattern: {
                       value: /^[0-9]{2}$/,
                       message: "Percentage must be a 2-digit number",
@@ -162,9 +163,7 @@ const Education: React.FC = () => {
                   className="form-control"
                   id="course1"
                   {...register("board_name.2", {
-                    validate: () =>
-                      validateRow(boardNames[2], py[2], percentages[2]) ||
-                      "Fill all fields in this row if any is filled",
+                    validate: () => validateRow(boardNames[2], py[2], percentages[2]),
                   })}
                 />
                 {errors.board_name && errors.board_name[2] && (
@@ -178,9 +177,7 @@ const Education: React.FC = () => {
                   className="form-control"
                   id="py3"
                   {...register("py.2", {
-                    validate: () =>
-                      validateRow(boardNames[2], py[2], percentages[2]) ||
-                      "Fill all fields in this row if any is filled",
+                    validate: validateYear,
                     pattern: {
                       value: /^[0-9]{4}$/,
                       message: "Passing year must be a 4-digit number",
@@ -198,9 +195,7 @@ const Education: React.FC = () => {
                   className="form-control"
                   id="percentage3"
                   {...register("percentage.2", {
-                    validate: () =>
-                      validateRow(boardNames[2], py[2], percentages[2]) ||
-                      "Fill all fields in this row if any is filled",
+                    validate: () => validateRow(boardNames[2], py[2], percentages[2]),
                     pattern: {
                       value: /^[0-9]{2}$/,
                       message: "Percentage must be a 2-digit number",
@@ -222,9 +217,7 @@ const Education: React.FC = () => {
                   className="form-control"
                   id="course2"
                   {...register("board_name.3", {
-                    validate: () =>
-                      validateRow(boardNames[3], py[3], percentages[3]) ||
-                      "Fill all fields in this row if any is filled",
+                    validate: () => validateRow(boardNames[3], py[3], percentages[3]),
                   })}
                 />
                 {errors.board_name && errors.board_name[3] && (
@@ -238,9 +231,7 @@ const Education: React.FC = () => {
                   className="form-control"
                   id="py4"
                   {...register("py.3", {
-                    validate: () =>
-                      validateRow(boardNames[3], py[3], percentages[3]) ||
-                      "Fill all fields in this row if any is filled",
+                    validate: validateYear,
                     pattern: {
                       value: /^[0-9]{4}$/,
                       message: "Passing year must be a 4-digit number",
