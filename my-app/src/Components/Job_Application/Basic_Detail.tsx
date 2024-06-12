@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormData, State, City } from "../interfacefile";
 import axios from "axios";
+import { loadavg } from "os";
 
 const Basic_Detail: React.FC = () => {
     const [state, setState] = useState([]);
