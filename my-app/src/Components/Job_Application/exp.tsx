@@ -13,6 +13,20 @@ const Experience: React.FC = () => {
     control,
     name: "experience",
   });
+  const regex: RegExp = /^\d{4}-\d{2}-\d{2}$/;
+  function isValidDate(dateString: string): boolean {
+    const date: Date = new Date(dateString);
+    return !isNaN(date.getTime());
+  }
+  const checkDate = async (dateString: string) => {
+    const check: boolean = regex.test(dateString) && isValidDate(dateString);
+    console.log(check);
+    if (check === true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   return (
     <div className="container_of_experience_form">
@@ -64,8 +78,10 @@ const Experience: React.FC = () => {
               <div className="col">
                 <label htmlFor={`experience.${index}.from`}>From</label>
                 <input
+                  placeholder="yyyy/dd/mm"
                   {...register(`experience.${index}.from`, {
                     required: "From date is required",
+                    validate: () => checkDate(date) || "Please Enter Valid Date!!"
                   })}
                   className={errors?.experience?.[index]?.from ? "error" : ""}
                   defaultValue={field.from}
@@ -79,8 +95,10 @@ const Experience: React.FC = () => {
               <div className="col">
                 <label htmlFor={`experience.${index}.to`}>To</label>
                 <input
+                  placeholder="yyyy/dd/mm"
                   {...register(`experience.${index}.to`, {
                     required: "To date is required",
+                    onChange: (e) => { checkDate(e) }
                   })}
                   className={errors?.experience?.[index]?.to ? "error" : ""}
                   defaultValue={field.to}
