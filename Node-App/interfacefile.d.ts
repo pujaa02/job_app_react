@@ -81,11 +81,23 @@ export interface FormData {
     board_name: string[];
     py: number[];
     percentage: number[];
+    experience: {
+        companyname: string;
+        designation: string;
+        from: string;
+        to: string;
+    }[];
+    
+    relation: {
+        name: string;
+        mobileno: string;
+        rel: string;
+    }[];
 
-    companyname: string[];
-    designation: string[];
-    from: Date[];
-    to: Date[];
+    // companyname: string[];
+    // designation: string[];
+    // from: Date[];
+    // to: Date[];
 
     hindi: boolean;
     read1: boolean;
@@ -108,9 +120,9 @@ export interface FormData {
     oracle: boolean;
     level4: string;
 
-    name: string[];
-    mobileno: number[];
-    rel: string[];
+    // name: string[];
+    // mobileno: number[];
+    // rel: string[];
 
     preloc: string;
     notice: string;

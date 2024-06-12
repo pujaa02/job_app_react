@@ -12,7 +12,10 @@ interface IStringArray extends Array<string | number | Date | boolean> { };
 
 const insertform = async (req: Request, res: Response) => {
     const formData: FormData = req.body;
+
     let id: number;
+    const experience_data = formData["experience"];
+    const relation_data = formData["relation"];
 
     try {
         const values: IStringArray = [
@@ -58,21 +61,22 @@ const insertform = async (req: Request, res: Response) => {
         for (let i = 0; i < 3; i++) {
             const workValues: (string | number | Date)[] = [
                 id,
-                formData.companyname[i],
-                formData.designation[i],
-                formData.from[i],
-                formData.to[i],
+                experience_data[i].companyname,
+                experience_data[i].designation,
+                experience_data[i].from,
+                experience_data[i].to,
             ];
-            if (formData.companyname[i]) {
+            if (experience_data[i].companyname !== "") {
                 await con.insert(
                     `INSERT INTO work_experience (emp_id, company_name, designation, from_date, to_date) VALUES (?)`,
                     [workValues]
                 );
             }
+            console.log("workexp");
         }
-        //language
+        console.log("hello");
         let language: boolean[] = [];
-        const rws: string[] = [];
+        let rws: string[] = [];
         let able1: string[] = [];
         let able2: string[] = [];
         let able3: string[] = [];
@@ -122,6 +126,9 @@ const insertform = async (req: Request, res: Response) => {
 
         rws.push(able1.join(), able2.join(), able3.join())
 
+        console.log(language, rws);
+
+
         for (let i = 0; i < language.length; i++) {
             if (language[i]) {
                 await con.insert(`INSERT INTO language (emp_id, language_know, rws) VALUES ('${id}', '${language[i]}', '${rws[i]}');`);
@@ -160,11 +167,11 @@ const insertform = async (req: Request, res: Response) => {
         for (let i = 0; i < 3; i++) {
             const relation: IStringArray = [
                 id,
-                formData.name[i],
-                formData.mobileno[i],
-                formData.rel[i],
+                relation_data[i].name,
+                relation_data[i].mobileno,
+                relation_data[i].rel,
             ];
-            if (formData.name[i]) {
+            if (relation_data[i].name !== "") {
                 await con.insert(
                     `insert into reference_contact(emp_id, name ,contact_number ,relation) values ( ? )`,
                     [relation]
@@ -183,7 +190,6 @@ const insertform = async (req: Request, res: Response) => {
             `insert into preferences(emp_id, prefered_location,notice_period , expected_ctc,current_ctc , department) values( ? )`,
             [pre]
         );
-
         res.json({ msg: "Success" });
     } catch (error) {
         res.json({ msg: "Failed" });
@@ -194,8 +200,8 @@ const insertform = async (req: Request, res: Response) => {
 const updateform = async (req: Request, res: Response) => {
     const id: number = Number(req.params.id);
     const formData: FormData = req.body;
-
-
+    const experience_data = formData["experience"];
+    const relation_data = formData["relation"];
     try {
 
         await con.update(
@@ -226,20 +232,18 @@ const updateform = async (req: Request, res: Response) => {
 
         const workExperience: getIds[] = await con.getall(`SELECT id AS work_id FROM work_experience WHERE emp_id IN (${id});`);
 
-        const wklen: number = formData.companyname.length;
-        for (let i = 0; i < wklen; i++) {
+        for (let i = 0; i < experience_data.length; i++) {
             if (workExperience[i]) {
                 await con.update(`UPDATE work_experience
-              SET company_name='${formData.companyname[i]}', designation='${formData.designation[i]}', from_date='${formData.from[i]}', to_date='${formData.to[i]}'
+              SET company_name='${experience_data[i].companyname}', designation='${experience_data[i].designation}', from_date='${experience_data[i].from}', to_date='${experience_data[i].to}'
               WHERE emp_id='${id}' AND id='${workExperience[i].work_id}';`);
             } else {
-                if (formData.companyname[i]) {
+                if (experience_data[i].companyname !== "") {
                     await con.update(`INSERT INTO work_experience (emp_id, company_name, designation, from_date, to_date)
-                VALUES ('${id}', '${formData.companyname[i]}', '${formData.designation[i]}', '${formData.from[i]}', '${formData.to[i]}');`);
+                VALUES ('${id}', '${experience_data[i].companyname}', '${experience_data[i].designation}', '${experience_data[i].from}', '${experience_data[i].to}');`);
                 }
             }
         }
-
         //language
         let language: boolean[] = [];
         const rws: string[] = [];
@@ -341,16 +345,15 @@ const updateform = async (req: Request, res: Response) => {
             `SELECT ref_id FROM reference_contact WHERE emp_id IN (${id});`
         );
 
-        const refLen: number = formData.name.length;
-        for (let i = 0; i < refLen; i++) {
+        for (let i = 0; i < relation_data.length; i++) {
             if (references[i]) {
                 await con.update(`UPDATE reference_contact
-                SET name='${formData.name[i]}', contact_number='${formData.mobileno[i]}', relation='${formData.rel[i]}'
+                SET name='${relation_data[i].name}', contact_number='${relation_data[i].mobileno}', relation='${relation_data[i].rel}'
                 WHERE emp_id='${id}' AND ref_id='${references[i].ref_id}';`);
             } else {
-                if (formData.name[i]) {
+                if (relation_data[i].name !== "") {
                     await con.insert(`INSERT INTO reference_contact (emp_id, name, contact_number, relation)
-                  VALUES ('${id}', '${formData.name[i]}', '${formData.mobileno[i]}', '${formData.rel[i]}');`);
+                  VALUES ('${id}', '${relation_data[i].name}', '${relation_data[i].mobileno}', '${relation_data[i].rel}');`);
                 }
             }
         }
