@@ -58,23 +58,23 @@ const insertform = async (req: Request, res: Response) => {
             }
         }
 
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < experience_data.length; i++) {
             const workValues: (string | number | Date)[] = [
                 id,
                 experience_data[i].companyname,
                 experience_data[i].designation,
-                experience_data[i].from,
-                experience_data[i].to,
+                experience_data[i].from_date,
+                experience_data[i].to_date,
             ];
             if (experience_data[i].companyname !== "") {
                 await con.insert(
-                    `INSERT INTO work_experience (emp_id, company_name, designation, from_date, to_date) VALUES (?)`,
+                    `INSERT INTO work_experience(emp_id,companyname,designation,from_date,to_date) VALUES (?)`,
                     [workValues]
                 );
             }
-            console.log("workexp");
+
         }
-        console.log("hello");
+
         let language: boolean[] = [];
         let rws: string[] = [];
         let able1: string[] = [];
@@ -126,7 +126,7 @@ const insertform = async (req: Request, res: Response) => {
 
         rws.push(able1.join(), able2.join(), able3.join())
 
-        console.log(language, rws);
+
 
 
         for (let i = 0; i < language.length; i++) {
@@ -164,7 +164,7 @@ const insertform = async (req: Request, res: Response) => {
         }
 
 
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < relation_data.length; i++) {
             const relation: IStringArray = [
                 id,
                 relation_data[i].name,
@@ -173,7 +173,7 @@ const insertform = async (req: Request, res: Response) => {
             ];
             if (relation_data[i].name !== "") {
                 await con.insert(
-                    `insert into reference_contact(emp_id, name ,contact_number ,relation) values ( ? )`,
+                    `insert into reference_contact(emp_id, name ,mobileno,rel) values ( ? )`,
                     [relation]
                 );
             }
@@ -192,6 +192,8 @@ const insertform = async (req: Request, res: Response) => {
         );
         res.json({ msg: "Success" });
     } catch (error) {
+        console.log(error);
+
         res.json({ msg: "Failed" });
     }
 };
@@ -235,12 +237,12 @@ const updateform = async (req: Request, res: Response) => {
         for (let i = 0; i < experience_data.length; i++) {
             if (workExperience[i]) {
                 await con.update(`UPDATE work_experience
-              SET company_name='${experience_data[i].companyname}', designation='${experience_data[i].designation}', from_date='${experience_data[i].from}', to_date='${experience_data[i].to}'
+              SET companyname='${experience_data[i].companyname}', designation='${experience_data[i].designation}', from_date='${experience_data[i].from_date}', to_date='${experience_data[i].to_date}'
               WHERE emp_id='${id}' AND id='${workExperience[i].work_id}';`);
             } else {
                 if (experience_data[i].companyname !== "") {
-                    await con.update(`INSERT INTO work_experience (emp_id, company_name, designation, from_date, to_date)
-                VALUES ('${id}', '${experience_data[i].companyname}', '${experience_data[i].designation}', '${experience_data[i].from}', '${experience_data[i].to}');`);
+                    await con.update(`INSERT INTO work_experience (emp_id, companyname, designation, from_date, to_date)
+                VALUES ('${id}', '${experience_data[i].companyname}', '${experience_data[i].designation}', '${experience_data[i].from_date}', '${experience_data[i].to_date}');`);
                 }
             }
         }
@@ -348,11 +350,11 @@ const updateform = async (req: Request, res: Response) => {
         for (let i = 0; i < relation_data.length; i++) {
             if (references[i]) {
                 await con.update(`UPDATE reference_contact
-                SET name='${relation_data[i].name}', contact_number='${relation_data[i].mobileno}', relation='${relation_data[i].rel}'
+                SET name='${relation_data[i].name}', mobileno='${relation_data[i].mobileno}', rel='${relation_data[i].rel}'
                 WHERE emp_id='${id}' AND ref_id='${references[i].ref_id}';`);
             } else {
                 if (relation_data[i].name !== "") {
-                    await con.insert(`INSERT INTO reference_contact (emp_id, name, contact_number, relation)
+                    await con.insert(`INSERT INTO reference_contact (emp_id, name, mobileno, rel)
                   VALUES ('${id}', '${relation_data[i].name}', '${relation_data[i].mobileno}', '${relation_data[i].rel}');`);
                 }
             }

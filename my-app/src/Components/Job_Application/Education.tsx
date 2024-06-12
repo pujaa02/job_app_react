@@ -57,7 +57,7 @@ const Education: React.FC = () => {
                                     id="board1"
                                     {...register("board_name.0", {
                                         required: "Required!!",
-                                       
+
                                     })}
                                 />
                                 {errors.board_name && errors.board_name[0] && (
@@ -92,10 +92,9 @@ const Education: React.FC = () => {
                                     id="percentage1"
                                     {...register("percentage.0", {
                                         required: "Required!!",
-                                       
                                         pattern: {
-                                            value: /^[0-9]{2}$/,
-                                            message: "Percentage must be a 2-digit number",
+                                            value: /^([1-9][0-9]?|([1-9][0-9])?.[0-9]{1,2})$/,
+                                            message: "Enter valid Percentage",
                                         },
                                     })}
                                 />
@@ -115,7 +114,7 @@ const Education: React.FC = () => {
                                     id="board2"
                                     {...register("board_name.1", {
                                         required: "Required!!",
-                                        
+
                                     })}
                                 />
                                 {errors.board_name && errors.board_name[1] && (
@@ -150,10 +149,10 @@ const Education: React.FC = () => {
                                     id="percentage2"
                                     {...register("percentage.1", {
                                         required: "Required!!",
-                                        
+
                                         pattern: {
-                                            value: /^[0-9]{2}$/,
-                                            message: "Percentage must be a 2-digit number",
+                                            value: /^([1-9][0-9]?|([1-9][0-9])?.[0-9]{1,2})$/,
+                                            message: "Enter valid Percentage",
                                         },
                                     })}
                                 />
@@ -173,7 +172,7 @@ const Education: React.FC = () => {
                                     id="course1"
                                     {...register("board_name.2", {
                                         required: "Required!!",
-                                        
+
                                     })}
                                 />
                                 {errors.board_name && errors.board_name[2] && (
@@ -209,8 +208,8 @@ const Education: React.FC = () => {
                                     {...register("percentage.2", {
                                         required: "Required!!",
                                         pattern: {
-                                            value: /^[0-9]{2}$/,
-                                            message: "Percentage must be a 2-digit number",
+                                            value: /^([1-9][0-9]?|([1-9][0-9])?.[0-9]{1,2})$/,
+                                            message: "Enter valid Percentage",
                                         },
                                     })}
                                 />
@@ -266,8 +265,8 @@ const Education: React.FC = () => {
                                         validate: () =>
                                             validateRow(boardNames[3], py[3], percentages[3]),
                                         pattern: {
-                                            value: /^[0-9]{2}$/,
-                                            message: "Percentage must be a 2-digit number",
+                                            value: /^([1-9][0-9]?|([1-9][0-9])?.[0-9]{1,2})$/,
+                                            message: "Enter valid Percentage",
                                         },
                                     })}
                                 />

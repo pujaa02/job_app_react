@@ -1,5 +1,7 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
+import Select from 'react-select'
+// import { colourOptions } from '../data';
 import { FormData } from "../interfacefile";
 const Preferance: React.FC = () => {
     const {

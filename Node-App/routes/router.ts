@@ -25,6 +25,7 @@ route.get("/fetchempdata/:id", fetchempdata.emp_det);
 
 route.get("/state", fetchstatedata.get_state);
 route.get("/cities/:id", fetchstatedata.get_cities);
+route.get("/city", fetchstatedata.get_city);
 
 
 export default route;

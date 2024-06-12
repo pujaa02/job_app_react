@@ -12,5 +12,9 @@ async function get_cities(req: Request, res: Response) {
     const query: City[] = await con.getall(`select * from cities where state_id=${id}`);
     res.json(query);
 }
+async function get_city(req: Request, res: Response) {
+    const query: City[] = await con.getall(`select * from cities`);
+    res.json(query);
+}
 
-export default { get_state, get_cities };
+export default { get_state, get_cities, get_city };

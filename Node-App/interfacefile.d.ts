@@ -84,8 +84,8 @@ export interface FormData {
     experience: {
         companyname: string;
         designation: string;
-        from: string;
-        to: string;
+        from_date: string;
+        to_date: string;
     }[];
     
     relation: {

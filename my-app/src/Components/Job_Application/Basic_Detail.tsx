@@ -2,10 +2,21 @@ import React, { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormData, State, City } from "../interfacefile";
 import axios from "axios";
+import { loadavg } from "os";
 
 const Basic_Detail: React.FC = () => {
     const [state, setState] = useState([]);
     const [city, setCity] = useState([]);
+
+
+    useEffect(() => {
+        const fetchallcity = async () => {
+            console.log("one time");
+            const result = await axios.get(`http://localhost:3036/city`, { withCredentials: true });
+            setCity(result.data);
+        }
+        fetchallcity();
+    }, [])
     const {
         register,
         formState: { errors }, watch
@@ -30,6 +41,7 @@ const Basic_Detail: React.FC = () => {
         setState(result.data);
     }
     const changecity = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setCity(city => [])
         const id: string = event.target.value;
         const result = await axios.get(`http://localhost:3036/cities/${id}`, { withCredentials: true });
         setCity(result.data);
@@ -105,6 +117,7 @@ const Basic_Detail: React.FC = () => {
                         <div className="col form-group">
                             <label htmlFor="phone">Phone:</label>
                             <input
+                                placeholder="[7-9][0-9]{9}"
                                 type="text"
                                 id="phone"
                                 className="form-control"
@@ -112,7 +125,7 @@ const Basic_Detail: React.FC = () => {
                                     required: "Mobile Number is Required!!",
                                     pattern: {
                                         value: phoneValidationPattern,
-                                        message: "Number Should be Start with [7-9] ",
+                                        message: "Enter Valid Mobile Number",
                                     },
                                 })}
                             />

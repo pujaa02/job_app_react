@@ -9,7 +9,6 @@ import Fetchemp from "./Components/EmployessShow/Fetchemp";
 import Wrong from "./Components/wrongurl/Wrong";
 import ForgetPass from "./Components/forgetpassword/ForgetPass";
 import Multistepform from "./Components/Job_Application/Multistep";
-// import Multistepform from "./Components/Job_Application/form";
 
 const App: React.FC = () => {
   return (

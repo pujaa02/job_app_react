@@ -8,7 +8,6 @@ import {
   Reference,
   Technology,
   Workexp,
-  FormData,
 } from "../interfacefile";
 
 async function get_user(req: Request, res: Response) {
@@ -60,16 +59,11 @@ async function emp_det(req: Request, res: Response) {
       percentage.push("");
     }
   }
-  let companyname: Array<string> = [];
-  let designation: Array<string> = [];
-  let from: Array<Date | string> = [];
-  let to: Array<Date | string> = [];
+  const experience: Array<object> = [];
+  
 
   for (let i = 0; i < workexp.length; i++) {
-    companyname.push(workexp[i].company_name);
-    designation.push(workexp[i].designation);
-    from.push(workexp[i].from_date);
-    to.push(workexp[i].to_date);
+    experience.push(workexp[i]);
   }
 
   let hindi: string = "";
@@ -84,7 +78,6 @@ async function emp_det(req: Request, res: Response) {
   let speak1: string = "";
   let speak2: string = "";
   let speak3: string = "";
-
 
 
 
@@ -170,14 +163,10 @@ async function emp_det(req: Request, res: Response) {
     }
   }
 
-  let name: Array<string> = [];
-  let mobileno: Array<number | string> = [];
-  let rel: Array<string> = [];
+  let relation: Array<object> = [];
 
   for (let i = 0; i < referance.length; i++) {
-    name.push(referance[i].name);
-    mobileno.push(referance[i].contact_number);
-    rel.push(referance[i].relation);
+    relation.push(referance[i]);
   }
   let finaldata = {
     fname: emp[0].fname,
@@ -196,10 +185,7 @@ async function emp_det(req: Request, res: Response) {
     board_name,
     py,
     percentage,
-    companyname,
-    designation,
-    from,
-    to,
+    experience,
     hindi,
     english,
     gujarati,
@@ -220,9 +206,7 @@ async function emp_det(req: Request, res: Response) {
     level3,
     oracle,
     level4,
-    name,
-    mobileno,
-    rel,
+    relation,
     preloc: preferance[0].prefered_location,
     notice: preferance[0].notice_period,
     exctc: preferance[0].expected_ctc,
