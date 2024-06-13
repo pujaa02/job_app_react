@@ -2,16 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormData, State, City } from "../interfacefile";
 import axios from "axios";
-import { loadavg } from "os";
 
 const Basic_Detail: React.FC = () => {
     const [state, setState] = useState([]);
     const [city, setCity] = useState([]);
 
-
     useEffect(() => {
         const fetchallcity = async () => {
-            console.log("one time");
             const result = await axios.get(`http://localhost:3036/city`, { withCredentials: true });
             setCity(result.data);
         }
@@ -106,7 +103,7 @@ const Basic_Detail: React.FC = () => {
                                     required: "Email is Required!!",
                                     pattern: {
                                         value: emailValidationPattern,
-                                        message: "Invalid email format",
+                                        message: "Invalid email!!",
                                     },
                                 })}
                             />

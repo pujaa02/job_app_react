@@ -126,9 +126,6 @@ const insertform = async (req: Request, res: Response) => {
 
         rws.push(able1.join(), able2.join(), able3.join())
 
-
-
-
         for (let i = 0; i < language.length; i++) {
             if (language[i]) {
                 await con.insert(`INSERT INTO language (emp_id, language_know, rws) VALUES ('${id}', '${language[i]}', '${rws[i]}');`);

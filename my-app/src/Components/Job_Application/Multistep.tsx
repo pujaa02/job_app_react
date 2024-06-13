@@ -36,9 +36,7 @@ function Multistepform() {
         if (id !== "" && id !== undefined) {
             const getEmpData = async () => {
                 try {
-                    const response = await axios.get(
-                        `http://localhost:3036/fetchempdata/${id}`
-                    );
+                    const response = await axios.get(`http://localhost:3036/fetchempdata/${id}`);
                     const emp = response.data.result;
                     setFormData(emp);
                     methods.reset(emp);
@@ -67,28 +65,12 @@ function Multistepform() {
         const onSubmit: SubmitHandler<FormData> = async (data) => {
             let url = window.location.pathname;
             if (url === "/updateform") {
-                console.log(data);
-
-                const result = await axios.post(
-                    `http://localhost:3036/updateform/${id}`,
-                    data,
-                    {
-                        withCredentials: true,
-                    }
-                );
+                const result = await axios.post(`http://localhost:3036/updateform/${id}`, data, { withCredentials: true, });
                 if (result.data.msg === "Success") {
                     navigate("/fetchemp");
                 }
             } else {
-                console.log(data);
-
-                const result = await axios.post(
-                    `http://localhost:3036/insertform`,
-                    data,
-                    {
-                        withCredentials: true,
-                    }
-                );
+                const result = await axios.post(`http://localhost:3036/insertform`, data, { withCredentials: true, });
                 if (result.data.msg === "Success") {
                     navigate("/fetchemp");
                 }

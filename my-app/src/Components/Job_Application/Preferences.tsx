@@ -1,19 +1,11 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import Select from 'react-select'
-// import { colourOptions } from '../data';
 import { FormData } from "../interfacefile";
 const Preferance: React.FC = () => {
     const {
         register,
         formState: { errors },
     } = useFormContext<FormData>();
-    const locationvalue = [
-        { value: '0', label: 'Ahmedabad' },
-        { value: '1', label: 'Rajkot' },
-        { value: '2', label: 'Gandhinagar' },
-        { value: '3', label: 'Vadodara' }
-    ]
     return (
         <div className="application-form-container">
             <form>
