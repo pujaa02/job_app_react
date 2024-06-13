@@ -138,7 +138,7 @@ const Experience: React.FC = () => {
                             })
                         }
                     >
-                        APPEND
+                        Add Work Experience
                     </button>
                 </div>
             </fieldset>

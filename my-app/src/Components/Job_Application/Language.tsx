@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useFormContext, useWatch, FieldError } from "react-hook-form";
+import React from "react";
+import { useFormContext, FieldError } from "react-hook-form";
 import { FormData } from "../interfacefile";
 const Language: React.FC = () => {
     const {
@@ -44,7 +44,6 @@ const Language: React.FC = () => {
             return "Corresponding technology must be selected"
         } else {
             clearErrors(tech);
-
         }
     };
 

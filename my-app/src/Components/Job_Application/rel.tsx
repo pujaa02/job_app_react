@@ -42,7 +42,7 @@ const Relation: React.FC = () => {
                                 <div className="col">
                                     <label htmlFor={`relation.${index}.mobileno`}>mobileno</label>
                                     <input
-                                    placeholder="[7-9][0-9]{9}"
+                                        placeholder="[7-9][0-9]{9}"
                                         {...register(`relation.${index}.mobileno`, {
                                             required: "Mobile Number is required",
                                             pattern: {
@@ -98,7 +98,7 @@ const Relation: React.FC = () => {
                                 })
                             }
                         >
-                            APPEND
+                            Add Referance
                         </button>
                     </div>
                 </fieldset>

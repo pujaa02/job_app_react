@@ -45,7 +45,6 @@ const Login: React.FC = () => {
     if (newerrors.mail.length === 0 && newerrors.pass.length === 0) {
       const result = await axios.get(`http://localhost:3036/checkuser/${LoginData.email}/${LoginData.password}`, { withCredentials: true });
       const res: string = result.data.msg;
-      console.log(res, "res");
       if (res === "Success") {
         navigate("/form");
 
