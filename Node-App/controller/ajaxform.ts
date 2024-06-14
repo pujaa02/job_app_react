@@ -246,20 +246,20 @@ const updateform = async (req: Request, res: Response) => {
         //language
         let language: boolean[] = [];
         const rws: string[] = [];
-        let able1: boolean[] = [];
-        let able2: boolean[] = [];
-        let able3: boolean[] = [];
+        let able1: string[] = [];
+        let able2: string[] = [];
+        let able3: string[] = [];
 
         if (formData.hindi) {
             language.push(formData.hindi);
             if (formData.read1) {
-                able1.push(formData.read1);
+                able1.push("read");
             }
             if (formData.write1) {
-                able1.push(formData.write1)
+                able1.push("write")
             }
             if (formData.speak1) {
-                able1.push(formData.speak1)
+                able1.push("speak")
             }
         } else {
             language.push(false);
@@ -267,13 +267,13 @@ const updateform = async (req: Request, res: Response) => {
         if (formData.english) {
             language.push(formData.english)
             if (formData.read2) {
-                able2.push(formData.read2);
+                able2.push("read");
             }
             if (formData.write2) {
-                able2.push(formData.write2)
+                able2.push("write")
             }
             if (formData.speak2) {
-                able2.push(formData.speak2)
+                able2.push("speak")
             }
         } else {
             language.push(false);
@@ -281,13 +281,13 @@ const updateform = async (req: Request, res: Response) => {
         if (formData.gujarati) {
             language.push(formData.gujarati)
             if (formData.read3) {
-                able3.push(formData.read3);
+                able3.push("read");
             }
             if (formData.write3) {
-                able3.push(formData.write3)
+                able3.push("write")
             }
             if (formData.speak3) {
-                able3.push(formData.speak3)
+                able3.push("speak")
             }
         } else {
             language.push(false);
