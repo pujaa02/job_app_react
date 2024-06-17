@@ -1,11 +1,18 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
+import Select from 'react-select';
 import { FormData } from "../interfacefile";
 const Preferance: React.FC = () => {
     const {
         register,
         formState: { errors },
     } = useFormContext<FormData>();
+    const options = [
+        { value: 'ahmedabad', label: 'Ahmedabad' },
+        { value: 'gandhinagar', label: 'Gandhinagar' },
+        { value: 'rajkot', label: 'Rajkot' },
+        { value: 'vadodara', label: 'Vadodara' },
+    ]
     return (
         <div className="application-form-container">
             <form>
@@ -14,7 +21,15 @@ const Preferance: React.FC = () => {
                     <div className="row">
                         <div className="col form-group">
                             <label htmlFor="rel_status">Prefered Location :</label>
-                            <select
+                            <Select
+                                isMulti
+                                name="preloc"
+                                className="basic-multi-select"
+                                classNamePrefix="select"
+                                id="pre_loc"
+                                options={options}
+                            />
+                            {/* <select
                                 id="pre_loc"
                                 {...register("preloc", {
                                     required: "Required",
@@ -23,7 +38,7 @@ const Preferance: React.FC = () => {
                                 <option value="ahmedabad">Ahmedabad</option>
                                 <option value="gandhinagar">Gandhinagar</option>
                                 <option value="rajkot">Rajkot</option>
-                            </select>
+                            </select> */}
                             {errors.preloc && <p className="red">{errors.preloc.message}</p>}
                         </div>
                         <div className="col">
