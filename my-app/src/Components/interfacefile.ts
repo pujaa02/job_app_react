@@ -81,7 +81,7 @@ export interface FormData {
     mobileno?: number[];
     rel?: string[];
 
-    preloc?: string;
+    preloc?: string[];
     notice?: string;
     exctc?: string;
     curctc?: string;

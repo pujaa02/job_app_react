@@ -17,6 +17,23 @@ async function get_user(req: Request, res: Response) {
   res.json(query);
 }
 
+async function delete_user(req: Request, res: Response) {
+  const id: number = Number(req.params.id);
+  try {
+    await con.delete(`delete from preferences where emp_id=${id}`);
+    await con.delete(`delete from reference_contact where emp_id=${id}`);
+    await con.delete(`delete from know_techno where emp_id=${id}`);
+    await con.delete(`delete from language where emp_id=${id}`);
+    await con.delete(`delete from work_experience where emp_id=${id}`);
+    await con.delete(`delete from edu_detail where emp_id=${id}`);
+    await con.delete(`delete from emp_details where emp_id=${id}`);
+    res.json("Success");
+  } catch (error) {
+    console.log(error);
+    res.json("Failed");
+  }
+}
+
 async function emp_det(req: Request, res: Response) {
   const id: string = req.params.id;
 
@@ -60,7 +77,7 @@ async function emp_det(req: Request, res: Response) {
     }
   }
   const experience: Array<object> = [];
-  
+
 
   for (let i = 0; i < workexp.length; i++) {
     experience.push(workexp[i]);
@@ -216,4 +233,4 @@ async function emp_det(req: Request, res: Response) {
   res.json({ result: finaldata });
 }
 
-export default { get_user, emp_det };
+export default { get_user, emp_det, delete_user };

@@ -20,6 +20,7 @@ route.post("/updateform/:id", Ajaxform.updateform);
 
 route.get("/employees", fetchempdata.get_user);
 route.get("/fetchempdata/:id", fetchempdata.emp_det);
+route.get("/deleteemp/:id", fetchempdata.delete_user)
 
 //fetchstatedata
 
