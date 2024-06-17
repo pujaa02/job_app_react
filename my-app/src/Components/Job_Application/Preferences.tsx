@@ -37,7 +37,8 @@ const Preferance: React.FC = () => {
                                         className="basic-multi-select"
                                         classNamePrefix="select"
                                         id="pre_loc"
-                                        onChange={(selected) => field.onChange(selected)}
+                                        onChange={(selectedOptions) => field.onChange(selectedOptions.map(option => option.value))}
+                                        value={options.filter(option => field.value?.includes(option.value))}
                                     />
                                 )}
                             />
